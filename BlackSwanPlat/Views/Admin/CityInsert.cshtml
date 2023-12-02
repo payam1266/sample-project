@@ -1,0 +1,169 @@
+﻿@{
+    ViewData["Title"] = "CityInsert";
+    Layout = "~/Views/Shared/_actionadminlayout.cshtml";
+}
+<link href="~/css/home.css" rel="stylesheet" />
+<link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+<link href="~/css/admin.css" rel="stylesheet" />
+<script src="~/lib/jquery/dist/jquery.js"></script>
+@model CityViewModel
+<div class="container-fluid px-4" style="color:#009688;background-color:#dee2e6">
+    <div class="row g-3 my-2">
+
+        <div class="col-md-3">
+
+            <div class="p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded">
+                <div>
+                    <div id="cityCount">
+                        <h3 id="countNumber" class="fs-2">0</h3>
+
+                    </div>
+                    <p class="fs-5">Count Of Cities</p>
+                </div>
+                <i class="fas fa-gift fs-1 primary-text border rounded-full secondary-bg p-3"></i>
+            </div>
+        </div>
+
+        <div class="row my-5">
+            <div id="formcityinsert">
+
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-6 offset-lg-3">
+                            <div class="insert-menu">
+
+
+                                <div class="form-group">
+                                    <h2 id="hinsert" style="font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif">INSERT CITY</h2>
+                                    <h2 id="hupdate" hidden="hidden" style="font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif">Update City</h2>
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" placeholder="NAME" asp-for="name" autocomplete="off">
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="datetime-local" class="form-control" placeholder="DATE" asp-for="date" autocomplete="off">
+                                    </div>
+                                </div>
+                                <div>
+                                    <button id="btnAdd" class="btn btn-dark text-light border shadow btn-lg" style="border-radius:5px;font-size:12px;letter-spacing:2px;font-weight:700">Plus</button>
+                                    <button id="btnUpdate" class="btn btn-dark btn-lg" style="border-radius:5px;font-size:12px;letter-spacing:2px;font-weight:700" hidden="hidden">Update</button>
+                                    <span id="spancityinsert" hidden="hidden" style="margin:100px;color:lightseagreen">Insert Successful  <img src="~/picture/done_all_fill1_wght400_grad0_opsz24.svg" /></span>
+                                    <span id="spancityupdate" hidden="hidden" style="margin:100px;color:lightseagreen">Update Successful  <img src="~/picture/done_all_fill1_wght400_grad0_opsz24.svg" /></span>
+                                    <span id="spancitydellet" hidden="hidden" style="margin:100px;color:lightseagreen">Delete Successful  <img src="~/picture/done_all_fill1_wght400_grad0_opsz24.svg" /></span>
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+            <div>
+                <h3 class="fs-4 mb-3 text-center" style="font-family:'Times New Roman', Times, serif;letter-spacing:2px">List Of Cities</h3>
+                <div class="container" id="divselect">
+                    <table class="table    shadow   " id="tbl">
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+
+    $(function () {
+
+        Select()
+
+
+        let btnAdd = $("#btnAdd")
+        btnAdd.click(function () {
+
+            $.post('/Admin/CityInsertConfirm', { name: $("#name").val(), date: $("#date").val() }, function (value) {
+                $("#name").val(null)
+                $("#date").val(null)
+                $("#spancityupdate").attr("hidden", true)
+                $("#spancitydellet").attr("hidden", true)
+                $("#spancityinsert").attr("hidden", false)
+                $("#name").click(function () {
+                    $("#spancityinsert").attr("hidden", true)
+                })
+                Select()
+            })
+
+        })
+
+    })
+    let i = 1
+    let tbl = $("#tbl")
+    function Select() {
+        $("#tbl").html(null)
+
+        $.post("/Admin/CitySelect", function (value) {
+            let th = `<thead class=" bg-info text-light"><tr><th>#</th><th>name</th><th>Date Created</th><th>Delete</th><th>Edit</th><tr></thead>`
+            tbl.append(th)
+            let tbody = "<tbody></tbody>"
+
+            tbl.append(tbody)
+            $("#countNumber").text(value.length);
+
+            value.forEach((city, index) => {
+                let tr = `<tr><td>${i}</td>
+                                    <td>${city.name}</td>
+                                    <td>${city.date}</td>
+                                              <td><button class="btn btn-outline-danger " style="border-radius:7px;font-size:12px;width:100px" onclick="F1(${city.id})">Delete</button></td>
+                                                  <td><button class="btn btn-outline-secondary" style="border-radius:7px;font-size:12px;width:100px" onclick="F2(${city.id})">Edit</button></td>
+                                   </tr>`
+                tbl.append(tr)
+                i++
+            })
+        })
+
+    }
+    function F1(id) {
+        $.post("/Admin/CityDelete", { id: id }, function (value) {
+            $("#spancityinsert").attr("hidden", true)
+            $("#spancityupdate").attr("hidden", true)
+            $("#spancitydellet").attr("hidden", false)
+            $(".form-control").click(function () {
+                $("#spancitydellet").attr("hidden", true)
+
+            })
+            Select();
+        })
+    }
+    let objectid;
+    function F2(id) {
+        objectid = id;
+        $.post("/Admin/CityEdit", { id: id }, function (value) {
+            $("#name").val(value.name);
+            $("#date").val(value.date);
+            $("#spancityupdate").attr("hidden", true);
+            $("#spancitydellet").attr("hidden", true);
+            $("#spancityinsert").attr("hidden", true);
+            $("#hinsert").attr("hidden", "hidden");
+            $("#hupdate").attr("hidden", false);
+            $("#btnUpdate").attr("hidden", false);
+            $("#btnAdd").attr("hidden", "hidden");
+        })
+    }
+
+    $("#btnUpdate").click(function () {
+        $.post('/Admin/CityUpdate', { id: objectid, name: $("#name").val(), date: $("#date").val() }, function (value) {
+            $("#spancityupdate").attr("hidden", false);
+            $("#spancitydellet").attr("hidden", true);
+            $("#spancityinsert").attr("hidden", true);
+            $("#hinsert").attr("hidden", false);
+            $("#hupdate").attr("hidden", true);
+            $("#name").val(null)
+            $("#date").val(null)
+            $("#btnUpdate").attr("hidden", true);
+            $("#btnAdd").attr("hidden", false);
+            $(".form-control").click(function () {
+                $("#spancityupdate").attr("hidden", true)
+            })
+            Select();
+        })
+    })
+
+</script>
+

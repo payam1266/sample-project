@@ -1,0 +1,280 @@
+﻿@{
+    ViewData["Title"] = "ListOfCard";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=PT+Sans&family=Philosopher:wght@700&family=Poppins:wght@400;500&family=Work+Sans&display=swap" rel="stylesheet">
+<link href="~/css/userpanel.css" rel="stylesheet" />
+<script src="~/js/site.js"></script>
+
+<script src="~/lib/jquery/dist/jquery.js"></script>
+
+
+@model List<CardItem>
+@{
+    var uid = "";
+}
+@inject UserManager<ApplicationUser> usermansger
+@if (User.Identity.IsAuthenticated)
+{
+    ApplicationUser user = await usermansger.FindByEmailAsync(User.Identity.Name);
+    <h3 style="margin-top:40px;margin-left:110px; font-family: 'Work Sans' , sans-serif">User :<span style="color:darkcyan"> @($"{user.firstName}  {user.lastName}")</span> </h3>
+    ;
+    <input id="ueserid" value="@user.Id" hidden="hidden" />
+    uid = user.Id;
+}
+@{
+    foreach (var item in ViewData["top"] as List<ApplicationUser>)
+        if (item.Id == uid)
+        {
+
+            <div class="drop" style="margin-left:110px">
+                <button class="btnmenu">Dicount Code</button>
+                <ul class="dropmunu">
+                    @foreach (var item2 in ViewData["dis"] as List<dis>)
+                    {
+                        <li><a href="#" id="change">@item2.code</a></li>
+                    }
+                </ul>
+            </div>
+
+        }
+
+}
+<h2 class="justify-content-center align-content-center" style="text-align:center;margin-top:50px;margin-bottom:20px; font-family: 'Work Sans' , sans-serif;letter-spacing:1px">Card List</h2>
+
+<div class="container">
+
+
+    <table class="table table-striped  table-hover shadow product-row" style="margin-bottom:50px;">
+        <thead class="bg-dark text-light">
+            <tr>
+                <th scope="col">#</th>
+                <th>ID</th>
+                <th scope="col">Product Name</th>
+                <th scope="col">Price</th>
+                <th scope="col">Count</th>
+                <th scope="col">Total</th>
+
+                <th>Update</th>
+                <th>Delete</th>
+
+            </tr>
+        </thead>
+
+        <tbody>
+
+
+            @{
+
+                var i = 1;
+                float total = 0;
+                @foreach (var item in Model)
+
+                {
+                    total = item.productcount * item.productprice;
+
+
+                    @if (item.userid == uid)
+                    {
+                        <tr>
+                            <th scope="row">@i</th>
+
+                            <td hidden="hidden"><input class="carrdi" value="@item.id" /></td>
+
+                            <td hidden="hidden"><input class="pid" value="@item.productid" /></td>
+
+                            <td id="cardid">@item.id</td>
+
+                            <td id="pnametd">@item.productname</td>
+
+                            <input id="pname" value="@item.productname" hidden="hidden" />
+
+                            <td id="price">@item.productprice</td>
+
+                            <input id="productprice" value="@item.productprice" hidden="hidden" />
+
+                            <td><input contenteditable="true" id="pcount" type="number" value="@item.productcount" style="width:40px"></td>
+
+                            <td id="total">@total </td>
+
+                            <td><button id="btnup" class="btn btn-info text-black">Update</button></td>
+
+                            <td>  <button class="btn btn-danger">Delete</button></td>
+
+                        </tr>
+                    }
+                    i++;
+
+                }
+            }
+        </tbody>
+    </table>
+    <div class="container" style="margin-bottom:30px">
+        <div class="row m-3 d-flex">
+            <div class="col">
+                <h2 id="totalPrice" class=" m-3 " style="font-family: 'Work Sans', sans-serif;letter-spacing:1px"></h2>
+            </div>
+            <div class="col" style="margin-left:30px;">
+                <h3 id="not" hidden="hidden" class="m-3 " style="color:brown;border-bottom:0px solid;padding-bottom:2px;font-family: 'PT Sans', sans-serif;">Not Enogh Quantity!</h3>
+            </div>
+
+            <div class="col">
+                <h3 id="delsuc" hidden="hidden" class="m-3 " style="color:#3f51b5;border-bottom:0px solid;padding-bottom:2px;font-family: 'PT Sans', sans-serif;">Delete  Successful<img src="~/picture/done_all_fill1_wght400_grad0_opsz24.svg" /></h3>
+            </div>
+
+        </div>
+        <div class="row">
+
+            <div class="col-6  discount-code">
+                <input type="text" id="discountCode" placeholder="Discount Code" class="form-control justify-content-center" style="margin:16px">
+
+            </div>
+
+
+            <div class="col-6  ">
+                @{
+                    if (Model != null)
+                    {
+                        <a asp-action="OrderConfirm" asp-controller="ShoppingCard" id="btnaddcart" class="col-4 btn btn-outline-dark flex-shrink-0 m-3 float-end" type="button" style="font-family: 'Work Sans', sans-serif;letter-spacing:1px;width:350px;">
+                            <i class="bi-cart-fill me-1"></i>
+                            Check Off
+                        </a>
+                    }
+                    else
+                    {
+                        <a asp-action="ProductPage" asp-controller="Home" class="col-4 btn btn-outline-dark flex-shrink-0 m-3 float-end" type="button" style="font-family: 'Work Sans', sans-serif;letter-spacing:1px;width:350px;">
+                            <i class="bi-cart-fill me-1"></i>
+                            Add To Cart
+                        </a>
+                    }
+                }
+            </div>
+
+        </div>
+
+
+    </div>
+
+</div>
+
+<script>
+
+    $(function () {
+
+
+        $("input#pcount").on("input", function () {
+
+            let count = parseInt($(this).val());
+
+            if (count <= 0) {
+                count = 1;
+                $(this).val(count);
+            }
+
+
+
+            let price = parseFloat($(this).closest("tr").find("td#price").text());
+
+
+            let total = count * price;
+            $(this).closest("tr").find("td#total").text("$" + total.toFixed(2));
+
+            calTotalPrice();
+        });
+
+        function calTotalPrice() {
+            let totalPrice = 0;
+            $("td#total").each(function () {
+                totalPrice += parseFloat($(this).text().replace("$", ""));
+            });
+            $("#totalPrice").text("Total Price: $" + totalPrice.toFixed(2));
+        }
+
+        calTotalPrice();
+
+
+
+
+
+
+        $(".btn-danger").click(function () {
+
+            var row = $(this).closest("tr");
+
+
+            var cardid = row.find("#cardid").text();
+
+            $.post("/ShoppingCard/DeleteCard", {
+                id: cardid, function(value) {
+
+
+
+                    row.remove();
+
+                    $(".btn-danger").val(null);
+                    $("#delsuc").attr("hidden", false);
+                    $("#delsuc").show();
+
+                    setTimeout(function () {
+                        $("#delsuc").hide();
+                    }, 3000);
+
+                    calTotalPrice();
+
+                }
+            })
+
+        })
+
+    });
+
+
+
+    $(".btn-info").click(function () {
+
+
+        let discountCode = $("#discountCode").val();
+        let row = $(this).closest("tr");
+
+
+        var cardid = row.find("#cardid").text();
+        var pnametd = row.find("#pnametd").text();
+        var pcount = row.find("#pcount").val();
+        var pid = row.find(".pid").val();
+        var pprice = row.find("#price").text();
+
+        var pc = $("#p")
+
+        $.post("/ShoppingCard/UpdateCard", { id: cardid, dis: discountCode, productid: pid, userid: $("#ueserid").val(), productcount: pcount, productname: pnametd, productprice: pprice },
+            function (value) {
+
+                if (value == "1") {
+                    $(".btn-info").val(null)
+                    location.reload();
+
+
+
+
+                }
+                else {
+                    $(".btn-info").val(null)
+                    $("#not").attr("hidden", false);
+                    $("#not").show();
+
+                    setTimeout(function () {
+                        $("#not").hide();
+                    }, 3000);
+
+                }
+
+
+            });
+    });
+
+
+</script>
+
+
+

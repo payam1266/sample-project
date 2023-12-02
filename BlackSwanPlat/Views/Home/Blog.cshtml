@@ -1,0 +1,107 @@
+﻿@{
+    ViewData["Title"] = "Blog";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="~/css/blog.css" rel="stylesheet" />
+<script src="~/js/site.js"></script>
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=PT+Sans&family=Philosopher:wght@700&family=Poppins:wght@400;500&family=Work+Sans&display=swap" rel="stylesheet">
+
+
+
+
+
+<div class="container-fluid" style="padding:0px">
+
+    <video autoplay loop muted id="backgroundvideo" controls="controls">
+
+  <source src="~/video/recording%202%202023-10-12%20170516.mp4" type="video/mp4" />px
+ 
+   
+     
+           
+    </video>
+
+
+    <div class="videotext">
+
+        <h2 class="textflow" style="font-size:32px">Aerials</h2>  <h2 class="textflow" style="font-size:32px">In The Sky</h2>
+        <h2 class="textflow" style="font-size:32px">When You Lose Small Mind</h2>  <h2 class="textflow" style="font-size:32px">You Free Your Life</h2>
+        <h2 class="textflow" style="font-size:32px">Aerials</h2>  <h2 class="textflow" style="font-size:32px">So Up High</h2>
+        <h2 class="textflow" style="font-size:32px">When You Free Your Eys</h2>
+        <h2 class="textflow" style="font-size:32px">Eternal Prize</h2>
+    </div>
+
+</div>
+
+
+
+
+<div class="blogcontainer">
+    <div class="blogtext">
+        <h2 class="mt-2">Critiquing Aesthetics in the 21st Century: Media's Adverse Impact on Public Perception of Beauty</h2>
+        <p style="font-size:15px;"><i style="font-family: 'Poppins', sans-serif;"> Author : Payam Ghaznavi</i></p>
+        <p>
+            In the modern world of the 21st century, the concept of beauty has become one of the most debated issues in society. With technological advancements and the proliferation of social and digital media, people have grown accustomed to viewing beautiful images and content in every aspect of their daily lives. This shift in culture and human experience has sparked criticisms in the field of aesthetics.<br />
+
+            Given the significance of beauty in human life, the study and critique of aesthetics in the 21st century are of paramount importance. On one hand, the media and digital platforms provide an excellent opportunity for sharing and disseminating beauty to a global audience. On the other hand, these media outlets can have profoundly negative effects on people's perception of beauty.
+        </p>
+    </div>
+    <div class="blogimg">
+        <img src="~/picture/8b216d956106507b479c36cbcf08b204.jpg" />
+        <div class="smallimages">
+
+            <img src="~/picture/8d190523a4f25f8abb9b8d7073e8af5b.jpg" style="padding:5px;margin-right:7px;" />
+
+            <img src="~/picture/9ec672e7cd84f4e2523ae54e0b920cac.jpg" style="padding:5px;margin-right:25px;" />
+        </div>
+    </div>
+    <div class="blogtext">
+
+        <p>
+            One of the primary negative influences of the media is the creation of unrealistic beauty standards. Often, the media presents images and models of beauty that cannot be compared to natural and real standards.This can lead to increased stress and anxiety among individuals regarding their personal appearance and beauty.<br />
+
+            Furthermore, excessive media consumption and a focus on external beauty can diminish people's connection with inner beauty and the experience of beauty in nature and visual arts. This can reduce people's understanding of beauty as a personal and profound experience.<br />
+
+            Ultimately, aesthetic critique in the 21st century should address both the positive and negative effects of media on our understanding of beauty and provide solutions to enhance our perception of beauty. Therefore, contemplating beauty as a multidimensional issue that encompasses not only physical appearance but also experiential and emotional aspects is crucial.<br />
+
+            In conclusion, aesthetic critique in the 21st century can contribute to a better understanding of beauty and its effects on our lives. Striking a balance between external and internal beauty, as well as experiencing beauty as a personal and human process, can help us become the best versions of ourselves and experience the world around us more profoundly.<br />
+
+            Considering the powerful impact of media on beauty and its perception, this critique of aesthetics emerges as a critical subject for evaluating and analyzing human life more comprehensively.
+
+
+
+
+
+
+        </p>
+        <div class="btnshare">
+            <a href="https://www.facebook.com/sharer.php?u=URL_OF_YOUR_ARTICLE" target="_blank" style="text-decoration:none">
+                <img src="~/picture/th (4).jpg" alt="Share on Facebook" width="40" />
+            </a>
+            <a href="https://twitter.com/intent/tweet?url=URL_OF_YOUR_ARTICLE&text=Check%20out%20this%20interesting%20article" target="_blank" style="text-decoration:none">
+                <img src="~/picture/th (3).jpg" alt="Share on Twitter" width="34" />
+            </a>
+            <a href="mailto:?subject=Check%20out%20this%20interesting%20article&body=Read%20this%20interesting%20article:%20URL_OF_YOUR_ARTICLE" target="_blank" style="text-decoration:none">
+                <img src="~/picture/th (7).jpg" alt="Share via Email" width="34" />
+            </a>
+        </div>
+    </div>
+</div>
+
+
+
+<script>
+   
+    $(function () {
+        let textvideo = $(".textflow");
+        textvideo.each(function (index, text) {
+            setTimeout(function () {
+                $(text).addClass("show");
+            }, 1700 * index);
+        });
+    });
+
+</script>

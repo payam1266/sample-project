@@ -1,0 +1,116 @@
+﻿@{
+    ViewData["Title"] = "FAQ";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/js/site.js"></script>
+<script src="~/lib/jquery/dist/jquery.js"></script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=PT+Sans&family=Philosopher:wght@700&family=Poppins:wght@400;500&family=Work+Sans&display=swap" rel="stylesheet">
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f0f0f0;
+        margin: 0;
+        padding: 0;
+    }
+
+    .faqcontainer {
+        max-width: 700px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #fff;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+        border-radius: 7px;
+    
+    }
+
+    .faqitem {
+        margin-bottom: 20px;
+        border: 1px solid #ccc;
+        border-radius: 7px;
+        padding: 10px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+        .faqitem:hover {
+            background-color: #f9f9f9;
+        }
+
+    .question {
+        font-weight: 500;
+        font-size: 18px;
+        border-left: 2px solid darkcyan;
+        padding-left: 5px;
+        font-family: 'Poppins', sans-serif;
+    }
+
+    .answer {
+        display: none;
+        padding: 5px;
+       
+    }
+
+    h2 {
+        margin: 20px auto;
+        text-align: center;
+    }
+
+    .h {
+        border-bottom: 3px solid darkcyan;
+        padding: 3px;
+    }
+</style>
+
+
+
+
+<h2><span class="h">FAQ</span></h2>
+
+<body>
+    <div class="faqcontainer">
+        <div class="faqitem">
+            <div id="quset" class="question">How Can I Track My Order? </div>
+            <div class="answer">Log in to the Black Swan site. Click on the My Orders option. In this section, you can see your order by clicking on the details. In this section, you can track the preparation process and the steps of sending your order.</div>
+        </div>
+        <div class="faqitem">
+            <div class="question">How Can I Cancel My Order?</div>
+            <div class="answer">
+                You can cancel an order or a shipment that you refused to send by referring to your profile. You can refer to the additional information to view the order cancellation process.
+            </div>
+        </div>
+        <div class="faqitem">
+            <div class="question">How Is The Shipping Cost Calculated In Black Swan?</div>
+            <div class="answer">
+                The shipping cost varies based on the shipping method and is displayed at the time of placing the order.
+            </div>
+        </div>
+        <div class="faqitem">
+            <div class="question">Black Swan Warranty Conditions</div>
+            <div class="answer">
+                Today, paying attention to product quality is one of the most important duties of product sellers, and after-sales service is a guarantee of maintaining this quality.
+                In this regard, Black Swan Company is proud to provide service as soon as possible to our dear customers.
+                You can contact 09364154728 to facilitate the follow-up of your device's warranty.
+            </div>
+        </div>
+
+    </div>
+
+</body>
+<script>
+    
+    $(function() {
+        $(".faqitem").click(function () {
+            let answer = $(this).find(".answer");
+            if (answer.is(":visible")) {
+                answer.fadeOut(200);
+            } else {
+                answer.fadeIn(300);
+            }
+        });
+    });
+
+</script>

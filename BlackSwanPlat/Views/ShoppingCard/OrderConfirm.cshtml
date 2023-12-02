@@ -1,0 +1,232 @@
+﻿@{
+    ViewData["Title"] = "OrderConfirm";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/js/site.js"></script>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<link href="~/css/orderconfirmt.css" rel="stylesheet" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=PT+Sans&family=Philosopher:wght@700&family=Poppins:wght@400;500&family=Work+Sans&display=swap" rel="stylesheet">
+
+@model Order
+
+@{
+    var uid = "";
+}
+@inject UserManager<ApplicationUser> usermansger
+@if (User.Identity.IsAuthenticated)
+{
+    ApplicationUser user = await usermansger.FindByEmailAsync(User.Identity.Name);
+    <h3 style="margin-top:40px;margin-left:110px; font-family: 'Work Sans' , sans-serif">User :<span style="color:darkcyan"> @($"{user.firstName}  {user.lastName}")</span> </h3>
+    ;
+    <input id="ueserid" value="@user.Id" hidden="hidden" />
+    uid = user.Id;
+}
+
+<div class="container mt-5">
+    <h2 id="spananim"><span>D</span><span>e</span><span>l</span><span>i</span><span>v</span><span>e</span><span>r</span><span>y</span> <span>D</span><span>e</span><span>t</span><span>a</span><span>i</span><span>l</span><span>s</span></h2>
+
+
+    <form asp-action="SubmitOrder" asp-controller="ShoppingCard" method="post">
+        <div class="row g-3">
+            <div class="mb-3 col-4 ">
+                <label class="form-label text-black-50">Full Nmae</label>
+                <input type="text" class="form-control" asp-for="fullname" required>
+                <input type="text" hidden="hidden" class="form-control" asp-for="customerid" value="@uid" id="customerId" required>
+            </div>
+
+            <div class="mb-3 col-4">
+                <label class="form-label  text-black-50">Phone:</label>
+                <input type="tel" class="form-control" asp-for="phone" id="phoneNumber" required>
+            </div>
+            <div class="mb-3 col-4">
+                <label for="city" class="form-label  text-black-50">City:</label>
+                <input type="text" asp-for="city" class="form-control" id="city" required>
+            </div>
+
+            <div class="mb-3 col-6">
+                <label for="postalCode" class="form-label  text-black-50">Postal Code:</label>
+                <input type="text" asp-for="postalcode" class="form-control" id="postalCode" required>
+                <span asp-validation-for="postalcode" class="text-danger"></span>
+            </div>
+            <div class="mb-3 col-6">
+                <label for="paymentMethod" class="form-label  text-black-50">Payment Method:</label>
+                <select class="form-select" asp-for="paymentmethod" id="paymentMethod" required>
+                    <option value="CreditCard">Credit Card</option>
+                    <option value="CashOnDelivery">Pay In Place</option>
+                </select>
+
+            </div>
+            <div class="mb-3">
+                <label class="form-label  text-black-50">Address:</label>
+                <textarea class="form-control" asp-for="address" id="address" rows="3" required></textarea>
+            </div>
+        </div>
+
+        <h4 id="spananim" style="font-family: 'Work Sans', sans-serif;letter-spacing:1px;margin-top:50px;border-left:3px solid;border-color:darkcyan;padding-left:10px;font-size:26px"><span>S</span><span>h</span><span>o</span><span>p</span><span>i</span><span>n</span><span>g</span> <span>L</span><span>i</span><span>s</span><span>t</span></h4>
+        <table class="table table-striped  table-hover shadow product-row" style="margin:50px 0px;">
+            <thead class="bg-dark text-light">
+                <tr>
+                    <th>#</th>
+                    <th>Card ID</th>
+                    <th>Product Name</th>
+                    <th>Product Price</th>
+                    <th>Product Count</th>
+                    <th>Total Price</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @{
+
+                    var i = 1;
+                    float total = 0;
+                    @foreach (var item in ViewData["listcard"] as List<CardItem>)
+
+                    {
+                        total = item.productcount * item.productprice;
+
+
+                        @if (item.userid == uid)
+                        {
+                            <tr id="trcard">
+                                <th scope="row">@i</th>
+
+                                <td hidden="hidden"><input class="carrdi" value="@item.id" /></td>
+
+                                <td hidden="hidden"><input class="pid" value="@item.productid" /></td>
+
+                                <td id="cardid">@item.id</td>
+
+                                <td id="pnametd">@item.productname</td>
+
+                                <input id="pname" value="@item.productname" hidden="hidden" />
+
+                                <td id="price">@item.productprice</td>
+
+                                <input id="productprice" value="@item.productprice" hidden="hidden" />
+
+                                <td id="pcount">
+                                    @item.productcount
+                                </td>
+
+                                <td id="total">@total </td>
+
+
+
+                                <td>  <button class="btn btn-danger">Delete</button></td>
+
+                            </tr>
+                        }
+                        i++;
+
+                    }
+                }
+            </tbody>
+        </table>
+        <div class="row m-3 d-flex">
+            <div class="col-6">
+                <h2 id="totalPrice" class=" m-3 " style="font-family: 'Work Sans', sans-serif;letter-spacing:1px"></h2>
+            </div>
+
+
+
+
+            <div class="col-6">
+                <button id="btnplace" type="submit" class="col-4 btn btn-outline-dark flex-shrink-0 m-3 float-end" style="font-family: 'Work Sans', sans-serif;letter-spacing:1px;width:350px;">Place Order</button>
+
+            </div>
+            <div class="col6">
+                <a asp-action="ProductPage" hidden="hidden" asp-controller="Home" id="btnaddcart" class="col-4 btn btn-outline-dark flex-shrink-0 m-3 float-end" type="button" style="font-family: 'Work Sans', sans-serif;letter-spacing:1px;width:350px;">
+                    <i class="bi-cart-fill me-1"></i>
+                    Add To Cart
+                </a>
+            </div>
+
+
+
+
+
+        </div>
+
+    </form>
+</div>
+
+<script>
+
+    $(function () {
+
+
+        $("input#pcount").on("input", function () {
+
+            let count = parseInt($(this).val());
+            let price = parseFloat($(this).closest("tr").find("td#price").text());
+
+
+            let total = count * price;
+            $(this).closest("tr").find("td#total").text("$" + total.toFixed(2));
+
+
+            calculateTotalPrice();
+        });
+
+        function calculateTotalPrice() {
+            var totalPrice = 0;
+            $("td#total").each(function () {
+                totalPrice += parseFloat($(this).text().replace("$", ""));
+            });
+            $("#totalPrice").text("Total Price: $" + totalPrice.toFixed(2));
+        }
+
+        calculateTotalPrice();
+
+        $(".btn-danger").click(function () {
+
+            var row = $(this).closest("tr");
+
+
+            var cardid = row.find("#cardid").text();
+
+            $.post("/ShoppingCard/DeleteCard", {
+                id: cardid, function(value) {
+
+
+
+                    row.remove();
+
+                    $(".btn-danger").val(null);
+                    $("#delsuc").attr("hidden", false);
+                    $("#delsuc").show();
+
+
+                    setTimeout(function () {
+                        $("#delsuc").hide();
+                    }, 3000);
+
+                    calculateTotalPrice();
+
+                }
+
+
+            })
+        })
+
+        if ($("#trcard").html() == null) {
+
+            $("#btnplace").attr("hidden", "hidden");
+            $("#btnaddcart").attr("hidden", false);
+        }
+        $("#btnplace").click(function () {
+            if ($("#trcard").html() == null) {
+                $("#btnplace").prop("disabled", true);
+                $("#btnplace").text("please Add To Cart");
+                $("#btnaddcart").attr("hidden", false);
+            }
+        })
+
+
+    });
+</script>

@@ -1,0 +1,393 @@
+﻿@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/js/site.js"></script>
+<script src="~/lib/jquery/dist/jquery.js"></script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=PT+Sans&family=Philosopher:wght@700&family=Poppins:wght@400;500&family=Work+Sans&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Lobster&family=Nunito&family=Young+Serif&display=swap" rel="stylesheet">
+
+<style>
+    body {
+        scroll-behavior: smooth;
+    }
+
+    #shoar {
+        margin-top: 75px;
+        padding: 0px;
+    }
+
+    .cardproduct {
+        transition: transform 0.4s ease-in-out;
+    }
+
+        .cardproduct:hover {
+            transform: scale(1.03);
+        }
+
+    .titleproduct {
+        color: #3f51b5;
+        font-family: 'Philosopher', sans-serif;
+        font-size: 26px;
+        border-bottom: 0px solid;
+        padding-bottom: 2px;
+        font-size: 26px;
+        transition: color 0.4s ease-in-out;
+    }
+
+    .brandproduct {
+        color: #fd7e14;
+        font-family: 'Philosopher', sans-serif;
+        font-size: 18px;
+        transition: color 0.4s ease-in-out;
+    }
+
+    .desproduct {
+        transition: max-height 0.4s ease-in-out;
+        max-height: 0;
+        overflow: hidden;
+        color: #607D8B;
+        font-family: 'Poppins', sans-serif;
+    }
+
+    .cardproduct:hover .desproduct {
+        max-height: 100px;
+    }
+
+    .priceproduct h2 {
+        color: darkcyan;
+        font-family: 'Philosopher', sans-serif;
+        font-size: 28px;
+        transition: color 0.5s ease-in-out;
+    }
+
+    .btnwatch {
+        background-color: #3f51b5;
+        color: aliceblue;
+        font-family: 'Philosopher', sans-serif;
+        font-size: 14px;
+        letter-spacing: 1px;
+        transition: background-color 0.1s ease-in-out;
+    }
+
+        .btnwatch:hover {
+            background-color: #fd7e14;
+            color: #001bb0;
+        }
+
+
+
+
+    .test {
+        transition: transform 0.4s ease-in-out;
+    }
+
+        .test:hover {
+            transform: scale(1.08);
+        }
+
+
+
+    .client {
+        opacity: 0;
+        transform: translateX(-30px);
+        transition: opacity 0.8s ease-in-out, transform 0.8s ease-in-out;
+        font-size: 18px;
+        line-height: 1.4;
+        margin: 20px 0;
+        padding: 10px;
+        font-family: 'Poppins', sans-serif;
+        letter-spacing: 0.5px;
+    }
+
+    .test:hover .client {
+        opacity: 1;
+        transform: translateX(0);
+        padding-left: 10px;
+    }
+
+
+
+
+    #btnbanner {
+        color: #d0e5f9;
+        width: 250px;
+        height: 32px;
+        background-color: color(srgb-linear 0 0.06 0.12 / 0.81);
+        letter-spacing: 2px;
+        font-family: 'Poppins', sans-serif;
+    }
+
+        #btnbanner:hover {
+            background-color: #beb339;
+            color: #000;
+            font-weight: 400;
+        }
+
+
+    .super {
+        opacity: 0;
+    }
+
+        .super.p {
+            opacity: 1;
+            transition: opacity 0.8s ease-in-out;
+        }
+
+</style>
+@model List<Product>
+@inject UserManager<ApplicationUser> usermansger
+@if (User.Identity.IsAuthenticated)
+{
+    ApplicationUser user = await usermansger.FindByEmailAsync(User.Identity.Name);
+
+
+    var userid = user.Id;
+    <input id="inpuid" hidden="hidden" value="@userid" />
+}
+
+<section id="banner" style=" padding:20px">
+    <div id="divbanner" class="container">
+        <div id="bannerrow" class="row">
+            <div id="shoar" class="col-6 text-justify"style="margin-top:85px">
+
+                <h1 class="super" style="font-size:80px;font-family: 'Poppins', sans-serif;">Experience <span style="font-size:80px;font-family:'Philosopher',sans-serif;color:#9a1941"> unique</span> Art</h1>
+                <h2 class="super " style="font-size:19px;font-weight:500;justify-content:center;width:300px;margin-top:20px;font-family: 'Poppins', sans-serif;margin-left:10px;">BlackSwan Is a Bridge Between Creative Artist<span style="color:#9a1941;font-weight:700"> &</span> Art Lovers</h2>
+
+
+                <a asp-action="AbouetMe" asp-controller="Home" id="btnbanner" class="btn btn-sm  super" style="margin-top:14px;border-radius:5px;margin-left:10px;">Join Us</a>
+
+            </div>
+            <div class="col-6 p-1 conteinerhero" style="width:600px;height:650px">
+
+
+                <img src="~/picture/download (2).jpg" class="mt-2  img-fluid  mx-auto d-block imghero" style="border-radius:10px" width="500px" height=":600px;" />
+                <img src="~/picture/download (3).jpg" class="mt-2 img-fluid  mx-auto d-block imghero" style="border-radius:10px" width="500px" height=":600px" />
+            </div>
+        </div>
+
+    </div>
+
+
+
+</section>
+
+
+
+
+<section id="ourservice" style="background-color:#dee2e6">
+
+    <div class="container" style="margin-bottom:30px;text-align:center">
+
+        <h2 class="text-center s " style="text-align:center;padding-bottom:5px;font-family: 'Work Sans', sans-serif;font-weight:600;font-size:32px;margin-top:50px;margin-bottom:70px"><span style="border-bottom:3px solid;border-color:#3F51B5;padding:3px;">All</span> Services</h2>
+        <div class="container-fluid  container2" style="background-color:#dee2e6">
+
+            <div class="box ">
+                <div class="icon">1</div>
+                <div class="content">
+                    <h3 style=" font-family: 'Philosopher', sans-serif;letter-spacing:1px">Handcrafted Artistry</h3>
+                    <p style=" font-family: 'Poppins', sans-serif;"> We provide a platform for artists and creators passionate about crafting exquisite bags, shoes, and clothing to showcase their creative innovations.</p>
+                    <a id="aservis" href="#">Read More</a>
+                </div>
+
+            </div>
+            <div class="box">
+                <div class="icon">2</div>
+                <div class="content">
+                    <h3 style=" font-family: 'Philosopher', sans-serif;letter-spacing:1px">Sales Marketplace</h3>
+                    <p style=" font-family: 'Poppins', sans-serif;">  For sellers, we offer a unique marketplace to effortlessly present and sell your handcrafted products to interested buyers online.</p>
+                    <a id="aservis" href="#">Read More</a>
+                </div>
+
+            </div>
+            <div class="box">
+                <div class="icon">3</div>
+                <div class="content">
+                    <h3 style=" font-family: 'Philosopher', sans-serif;letter-spacing:1px">Unique Experience</h3>
+                    <p style=" font-family: 'Poppins', sans-serif;"> For buyers, we deliver a one-of-a-kind shopping experience, allowing you to explore and purchase artful products directly from independent artisans.</p>
+                    <a id="aservis" href="#">Read More</a>
+                </div>
+
+            </div>
+
+
+
+        </div>
+    </div>
+</section>
+
+
+@*about us*@
+
+
+<div class="container-fluid " style="padding:50px;background-color:#dee2e6">
+    <div class="row">
+        <div class="col " style="padding:30px;background-color:#e9ecef;border-radius:20px;">
+            <p class="us " style="font-size:24px;font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;letter-spacing:1px;">Why Choos Us</p>
+            <p class="time" style="font-size:50px;margin-top:30px;font-family: 'Work Sans', sans-serif;font-weight:700;letter-spacing:2px;">Artistic Diversity <span style="color:crimson;font-size:45px">&</span><br />Supporting Creativity</p>
+
+        </div>
+        <div class="col  " style="padding:30px;background-color:#e9ecef">
+            <p class="mt-4" style="margin-top:20px;background-color:#e9ecef;color:#04756b;border-left:4px solid;padding:20px;border-color:#ffc107 ;font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;font-size:22px;letter-spacing:0.5px;line-height:2em">  By choosing us, you are not just buying products; you are supporting independent artists and their passion for crafting exceptional fashion.</p>
+            <a href="#socialmedia" class="btn  btn-lg " id="btnreach" style="margin-left:22px;width:200px;height:50px;box-shadow: 9px 9px 20px 4px rgba(0, 0, 0, 0.25);margin-top:20px;background-color:#ffc107;color:black;border-radius:10px">Reach Us</a>
+        </div>
+    </div>
+    <div class="row mt-5">
+        <div class="col " style="border:0px solid ;background-color:#212529;border-radius:30px;box-shadow: 9px 9px 20px 4px rgba(0, 0, 0, 0.25);">
+            <div style="padding:30px">
+                <img src="~/picture/7cd69e9ad1a13516194ef880d829c91b (1).jpg" width="170" height="170" style="border-radius:50%" class="shadow" />
+                <p style="margin-top:10px;font-size:24px;color:#6c757d; font-family: 'Poppins', sans-serif;">Vision</p>
+
+                <p style="color:#adb5bd;font-family: 'Poppins', sans-serif;letter-spacing:0.5px;line-height:1.8em"> Our goal is to provide an environment where artists and creators can share their ideas and works, and by gaining access to broader markets and new audiences, introduce their art to others. We act as an intermediary between artists and the community to promote art and culture, and to help achieve our vision of elevating art on a global scale.</p>
+            </div>
+        </div>
+        <div class="col mt-4 px-4">
+            <div style="margin-top:50px;margin-left: 20px;margin-right:20px;border:0px solid;padding:30px;background-color:#ced4da;border-radius:30px;box-shadow: 9px 9px 20px 4px rgba(0, 0, 0, 0.25);">
+                <img src="~/picture/a0d3733d8893d70aa12a6d654823a973.jpg" width="170" height="170" style="border-radius:50% " class="shadow " />
+                <p style="margin-top:10px;font-size:24px;color:#6c757d; font-family: 'Poppins', sans-serif;">Skill</p>
+                <p style="color:#6c757d;font-family: 'Poppins', sans-serif;letter-spacing:0.5px;line-height:1.8em">From managing creative features to leveraging cutting-edge technologies, we have the ability to create strong connections between artists and buyers. Our skills are dedicated to enhancing the experience of all members.</p>
+            </div>
+        </div>
+        <div class="col" style="border:0px solid;background-color:#212529 ;border-radius:30px;box-shadow: 9px 9px 20px 4px rgba(0, 0, 0, 0.25);">
+            <div style="padding:30px">
+                <img src="~/picture/2f41055529bfd42b5118e428101ae41e.jpg" width="170" height="170" style="border-radius:50% " class="shadow " />
+                <p style="margin-top:10px;font-size:24px;color:#6c757d; font-family: 'Poppins', sans-serif;">Feature</p>
+                <p style="color:#adb5bd;font-family: 'Poppins', sans-serif;letter-spacing:0.5px;line-height:1.8em">Our platform's unique features provide a safe and comfortable space for artists and buyers alike. These features include various sections for introducing, selling, and showcasing artistic works, direct communication with artists, and access to a wide range of artworks.our support team is always ready to assist you in creating a better experience for art and creativity.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+@*popular product*@
+
+
+@if (Model.Count != 0)
+{
+    <div class="container-fluid mt-5 pall" style="background-color:#dce2e2;padding:30px;" id="ourproduct">
+
+        <h2 class="text-center s" style="text-align:center;padding-bottom:5px;font-family: 'Work Sans', sans-serif;font-weight:700;font-size:32px;margin-top:50px"><span style="border-bottom:3px solid;border-color:crimson;padding:3px">Our</span> Popular Product</h2>
+
+
+        <section id="product" class="mt-5 ">
+
+            <div class=" productpopular">
+
+
+                <div class="row  row-cols-4 g-4 ">
+
+                    @foreach (var item in Model)
+                    {
+
+                        <div class="card h-100 shadow cardproduct col-3 m-5 p-4 justify-content-evenly">
+                            @foreach (var item2 in item.productImages)
+                            {
+
+                                <img src="@($"data:image/png;base64,{Convert.ToBase64String(item2.img)}")" class="card-img-top img-fluid custum-bg" style="height:350px" />
+                                break;
+                            }
+                            <div class="card-body p-2">
+
+
+                                <div class="card-title titleproduct">@item.name</div>
+                                <div class="card-title brandproduct">Brand : @item.brand.name</div>
+
+
+                                <p class="card-text desproduct"> @item.description</p>
+
+                            </div>
+
+                            <div class="card-footer custom-footer" style="padding:8px 6px;border:none">
+                                <div class="float-start priceproduct">
+                                    <h2>$@item.price</h2>
+
+                                </div>
+                                <div class="float-end">
+                                    <a asp-action="ProductDetails" asp-controller="Home" asp-route-productid="@item.id" asp-route-cateid="@item.productCategory.id" class="btn btnwatch flex-shrink-0">Watch Now</a>
+
+                                </div>
+
+                            </div>
+                        </div>
+                    }
+
+                </div>
+
+            </div>
+
+        </section>
+    </div>
+
+}
+
+
+
+
+
+
+<section id="test">
+    <div class="container">
+        <h2 class="text-center s " style="text-align:center;padding-bottom:5px;font-family: 'Work Sans', sans-serif;font-weight:600;font-size:32px;margin-top:50px;margin-bottom:70px"><span style="border-bottom:3px solid;border-color:#3F51B5;padding:3px;">What</span> Client Say</h2>
+        <div class="row offset-1 mt-4 testrow">
+            <div class="col-4 test " style="border-left:none">
+                <p class=" client " style="color:#55220f">My experience with BlackSwan was excellent.Outstanding services,<br />a professional team,and the best choice for Selling and Shopping. </p>
+                <img src="~/picture/895df532b711da0dd0addad7efcb224a.jpg" class="img-fluid " style="border-radius:20px;width:185px;height:185px " />
+                <p id="userdetail" style="color:#7e91a4; font-family: 'Poppins', sans-serif;font-size:14px"><b style=" font-family: 'Philosopher', sans-serif;letter-spacing:0.5px;font-size:16px">Joaquin Phoenix</b><br />Co-founder at Anahita</p>
+            </div>
+            <div class="col-4 test" style="border-left:none">
+                <p class=" client" style="color:#035c5f">My encounter with BlackSwan was outstanding.They provide top-notch services,boast a team of professionals.I suggest them to all. </p>
+                <img src="~/picture/01cf9187a95c23814ea9f8e105552990.jpg" class="img-fluid" style="border-radius:20px;width:185px;height:185px" />
+                <p id="userdetail" style="color:#7e91a4; font-family: 'Poppins', sans-serif;font-size:14px"><b style=" font-family: 'Philosopher', sans-serif;letter-spacing:0.5px;font-size:16px">Emily</b><br />Co-founder at Azita</p>
+            </div>
+            <div class="col-4 test" style="border-left:none">
+                <p class=" client" style="color:#130a6d">I had a fantastic time working with BlackSwan.Exceptional services,a highly skilled team,and the ultimate destination for My Business. </p>
+                <img src="~/picture/download (4).jpg" class="img-fluid" style="border-radius:20px;width:185px;height:185px" />
+                <p id="userdetail" style="color:#7e91a4;font-family: 'Poppins', sans-serif ;font-size:14px;"><b style=" font-family: 'Philosopher', sans-serif;letter-spacing:0.5px;font-size:16px">Jack & July</b><br />Co-founder at Mitra</p>
+
+            </div>
+
+        </div>
+    </div>
+</section>
+
+
+
+<div class="container-fluid">
+    <section id="socialmedia">
+        <div class="container text-center">
+            <h2 class="text-center s " style="text-align:center;padding-bottom:5px;font-family: 'Work Sans', sans-serif;font-weight:600;font-size:32px;margin-top:70px;margin-bottom:70px"><span style="border-bottom:3px solid;border-color:#3F51B5;padding:3px">Find Us</span> On Social Media</h2>
+
+            <div class="social-icons sociaicon m-5">
+                <a class="mx-2" href="https://r.search.yahoo.com/_ylt=AwrFOX4qvQ5lzLcdGbhXNyoA;_ylu=Y29sbwNiZjEEcG9zAzEEdnRpZAMEc2VjA3Ny/RV=2/RE=1695493546/RO=10/RU=https%3a%2f%2fwww.facebook.com%2f/RK=2/RS=rpeBW.2ST2Kab3FfpSV6gWZslh4-"><img src="~/picture/th.jpg" style="border:none;" /></a>
+                <a class="mx-2" href="https://r.search.yahoo.com/_ylt=AwrihdD2vA5lDR8d719XNyoA;_ylu=Y29sbwNiZjEEcG9zAzEEdnRpZAMEc2VjA3Ny/RV=2/RE=1695493494/RO=10/RU=https%3a%2f%2ftwitter.com%2f/RK=2/RS=GFAdK4ywZBRQNvjZnqbv5HDynD4-"><img src="~/picture/th (3).jpg" style="border:none;" /></a>
+                <a class="mx-2" href="https://r.search.yahoo.com/_ylt=AwrNY7tEvQ5lqrcdvlNXNyoA;_ylu=Y29sbwNiZjEEcG9zAzEEdnRpZAMEc2VjA3Ny/RV=2/RE=1695493572/RO=10/RU=https%3a%2f%2fwww.instagram.com%2f/RK=2/RS=x5u7sodAEtRg8Mo1Gcj69NqAbZM-"><img src="~/picture/th (6).jpg" style="border:none;" /></a>
+                <a class="mx-2" href="https://r.search.yahoo.com/_ylt=AwrE_bpZvQ5lSXYdrBBXNyoA;_ylu=Y29sbwNiZjEEcG9zAzEEdnRpZAMEc2VjA3Ny/RV=2/RE=1695493593/RO=10/RU=https%3a%2f%2fwww.youtube.com%2f/RK=2/RS=8jkONRKNefM5XbwkLayFuOrgwjQ-"><img src="~/picture/th (5).jpg" style="border:none;width:55px" /></a>
+            </div>
+        </div>
+    </section>
+</div>
+
+
+
+
+
+<script>
+
+    $(function () {
+        $(".super").each(function (i) {
+            var card = $(this);
+            setTimeout(function () {
+                card.addClass("p");
+            }, i * 700);
+        });
+
+    });
+
+</script>

@@ -1,0 +1,185 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>RegisterLogin</title>
+    <link href="~/css/registerlogin.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  
+
+    <script src="~/js/site.js"></script>
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+   @*  <script src="~/js/registerlogin.js"></script> *@
+
+</head>
+@model RegisterLoginViewModel
+<body>
+
+    <div class="container" id="container">
+
+        <div class="form-container sign-up-container">
+            <form asp-action="RegisterConfirm" asp-controller="Account">
+             
+                    <h1>Create Account</h1>
+                  
+
+                    <div class="infield" style="margin-bottom:0px;">
+                        <input type="email" placeholder="Email" asp-for="username" required />
+                    </div>
+                    <div class="infield" style="margin-bottom:0px;">
+                        <input type="text" placeholder="FirstName" asp-for="firstName" required />
+                    </div>
+                    <div class="infield" style="margin-bottom:0px;">
+                        <input type="text" placeholder="LasttName" asp-for="lastName" required />
+                    </div>
+                    <div class="infield" style="margin-bottom:0px;">
+                        <input type="text" placeholder="City" asp-for="city" required />
+                    </div>
+                    <div class="infield" style="margin-bottom:0px;">
+                        <input type="tel" placeholder="Phone" asp-for="phone" required />
+                    </div>
+                    <div class="infield" style="margin-bottom:0px;">
+                        <input type="number" placeholder="Age" asp-for="age" required />
+                    </div>
+                    <div class="infield" style="margin-top:0px;">
+                        <input type="password" placeholder="Password" asp-for="password" required />
+                    </div>
+                    <button>Sign Up</button>
+               
+            </form>
+        </div>
+        <div class="form-container sign-in-container">
+             <form asp-action="LoginConfirm" asp-controller="Account">
+           
+                <a asp-action="Index" asp-controller="Home">Back To Home</a>
+                <h1 style="margin-bottom:30px">Sign in</h1>
+            
+                <div class="infield">
+                    <input type="email" placeholder="Email" id="useremail" asp-for="username" required />
+
+                </div>
+                <div class="infield" style="display:none" id="tokendiv">
+                    <input type="text" placeholder="" id="tokeninp" asp-for="username" value="@ViewData["token"]" readonly />
+
+                </div>
+
+                <div class="infield" hidden="hidden" id="datadiv">
+
+                    <input type="password" placeholder="Password" id="pass1"  class="form-control" />
+
+                        <input type="password" placeholder="Confirm password" id="conpass"  class="form-control" />
+
+
+                </div>
+
+
+                <div class="infield">
+                    <input type="password" placeholder="Password" id="pass" asp-for="password" required />
+
+                </div>
+                <div class="infield">
+                    @inject RoleManager<IdentityRole> roleManager
+                    @{
+                        var roles = roleManager.Roles.ToList();
+                        <select style="border-radius:5px;border:none;width:300px;padding:5px 10px;margin-bottom:20px" id="selectrole" asp-for="roleName" required>
+                            <option>Select Your Role</option>
+                            @foreach (var item in roles)
+                            {
+                                <option value="@item.Name">@item.Name</option>
+                            }
+                        </select>
+
+                    }
+                </div>
+                <a href="#" id="btnforget" class="forgot">Forgot your password?</a>
+                <button type="submit" class="btnsignin">Sign In</button>
+                <a class="alink" href="#" id="gettoken" style="display:none">Get Token</a>
+                <a class="alink" href="#" id="btnreset" style="display:none">Reset Password</a>
+            
+              </form> 
+        </div>
+        <div class="overlay-container" id="overlayCon">
+            <div class="overlay">
+                <div class="overlay-panel overlay-left">
+                    <h1>Welcome Back!</h1>
+                    <p>To keep connected with us please login with your personal info</p>
+                    <button>Sign In</button>
+                </div>
+                <div class="overlay-panel overlay-right">
+                    <h1>Hello, Friend!</h1>
+                    <p>Enter your personal details and start journey with us</p>
+                    <button>Sign Up</button>
+                </div>
+            </div>
+            <button id="overlayBtn"></button>
+        </div>
+    </div>
+
+
+
+
+    <script>
+
+        const container = document.getElementById('container');
+        const overlayCon = document.getElementById('overlaycon');
+        const overlayBtn = document.getElementById('overlayBtn');
+
+        overlayBtn.addEventListener("click", () => {
+            container.classList.toggle('right-panel-active');
+        });
+
+
+        $(function () {
+
+
+            $("#btnforget").click(function () {
+                $("#selectrole").hide();
+                $("#pass").hide();
+                $(this).text("Please Enter Your Email");
+                $(".btnsignin").hide();
+                $("#gettoken").show();
+
+
+
+            })
+           
+
+
+
+
+            $("#gettoken").click(function () {
+                $.post("/Account/ResetPassword", { email: $("#useremail").val() }, function (value) {
+
+                    $("#datadiv").show();
+                    $("#tokeninp").val(value);
+                    $("#gettoken").hide();
+                    $("#btnreset").show();
+                    $("#btnforget").text("Please Enter New Password.")
+
+                })
+
+            })
+            $("#btnreset").click(function () {
+
+                if ($("#pass1").val() != $("#conpass").val()) {
+                    alert("New password and confirm password do not match.");
+                    $("#conpass").val(null);
+                    return;
+                }
+
+                $.post("/Account/ResetPasswordConfirm", { Email: $("#useremail").val(), Token: $("#tokeninp").val(), Password: $("#pass1").val() }, function (value) {
+                    alert(value);
+                    $(".btnsignin").val(null);
+                    location.reload();
+                })
+            })
+        })
+    </script>
+</body>
+</html>

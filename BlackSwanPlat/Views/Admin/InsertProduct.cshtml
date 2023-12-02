@@ -1,0 +1,131 @@
+﻿@{
+    ViewData["Title"] = "InsertProduct";
+    Layout = "~/Views/Shared/_actionadminlayout.cshtml";
+}
+<link href="~/css/home.css" rel="stylesheet" />
+<link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+<link href="~/css/admin.css" rel="stylesheet" />
+
+<script src="~/lib/jquery/dist/jquery.js"></script>
+
+<script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+
+<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+@model ProductViewModel
+<div class="row my-5">
+    <div id="formcityinsert">
+        <form asp-action="InsertProductConfirm" asp-controller="Admin" enctype="multipart/form-data" method="post">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6 offset-lg-3">
+                        <div class="insert-menu">
+
+                    
+                            <div class="form-group">
+                                <h2 id="hinsert" style="font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif">INSERT Product</h2>
+                                <h2 id="hupdate" hidden="hidden" style="font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif">Update Brand</h2>
+                            </div>
+
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="NAME" asp-for="name" required>
+                                <span asp-validation-for="name" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <input type="number" class="form-control" placeholder="Count" asp-for="count"  required>
+                                <span asp-validation-for="count" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <input type="number" class="form-control" placeholder="Price" asp-for="price"  required>
+                                <span asp-validation-for="price" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <input type="datetime-local" class="form-control text-black-50" placeholder="DATE" asp-for="date" autocomplete="" required>
+                                <span asp-validation-for="date" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="Size" asp-for="size" autocomplete="on" required>
+                                <span asp-validation-for="size" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+
+                                <input type="text" class="form-control" placeholder="Color" asp-for="color" autocomplete="on" required>
+                                <span asp-validation-for="color" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <input type="file" multiple class="form-control text-black-50"  asp-for="img"  required>
+                            </div>
+                            <div class="form-group">
+                                <select asp-for="sellerid" class="form-select text-black-50" style="border:none;border-bottom:1px solid #ced4da;" required>
+                                    <option value="">Select Seller</option>
+                                    @foreach (var seller in (List<ApplicationUser>)ViewData["sellers"])
+                                    {
+                                        <option value="@seller.Id">@seller.firstName</option>
+                                    }
+                                </select>
+                            </div>
+                            <div class="form-group">
+
+                                <select class="form-select text-black-50" asp-for="brandid" style="border:none;border-bottom:1px solid #ced4da;" required>
+                                    <option>Select Brand</option>
+                                    @{
+                                        foreach (var item in ViewData["brands"] as List<Brand>)
+                                        {
+                                            <option value="@item.id">@item.name</option>
+                                        }
+                                    }
+                                </select>
+                            </div>
+                            <div class="form-group">
+
+                                <select class="form-select text-black-50" asp-for="cityid" style="border:none;border-bottom:1px solid #ced4da;" required>
+                                    <option>Select City</option>
+                                    @{
+                                        foreach (var item in ViewData["cities"] as List<City>)
+                                        {
+                                            <option value="@item.id">@item.name</option>
+                                        }
+                                    }
+                                </select>
+                            </div>
+
+
+                            <div class="form-group">
+                                <lable class="form-label text-black-50 p-1">Select Category :</lable><br />
+                                @{
+                                    foreach (var item in ViewData["category"] as List<ProductCategory>)
+                                    {
+                                        <lable class="form-label p-1">@item.name</lable>
+                                        <input style="margin-top:10px" type="radio" class="form-check-inline text-black-50" asp-for="catrgoryid" value="@item.id" required />
+                                    }
+                                }
+                            </div>
+                            <div>
+                                <label class="form-label text-black p-1">Is Avalaible</label>
+                                <input type="checkbox" class="form-check-input text-black-50 p-1" asp-for="IsAvalaible" />
+                            </div>
+                            <div class="form-group">
+                                <textarea class="form-control" rows="3" placeholder="DISCRIPTION" asp-for="description" required></textarea>
+                            </div>
+
+                            <div>
+                                <button id="btnAdd" class="btn btn-outline-dark  shadow btn-lg" style="border-radius:5px;font-size:12px;letter-spacing:2px;width:170px">Plus</button>
+
+                                <a class="btn btn-outline-dark  shadow btn-lg float-end" style="border-radius:5px;font-size:12px;letter-spacing:2px;" asp-action="ListOfProduct" asp-controller="Admin">
+                                    LIST OF PRODUCT
+                                </a>
+                                <span id="spancityinsert" hidden="hidden" style="margin:100px;color:teal">Insert Successful  <img src="~/picture/done_all_fill1_wght400_grad0_opsz24.svg" /></span>
+                                <span id="spancityupdate" hidden="hidden" style="margin:100px;color:teal">Update Successful  <img src="~/picture/done_all_fill1_wght400_grad0_opsz24.svg" /></span>
+                                <span id="spancitydellet" hidden="hidden" style="margin:100px;color:teal">Delete Successful  <img src="~/picture/done_all_fill1_wght400_grad0_opsz24.svg" /></span>
+
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+

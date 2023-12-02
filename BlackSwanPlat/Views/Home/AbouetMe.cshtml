@@ -1,0 +1,223 @@
+﻿@{
+    ViewData["Title"] = "AbouetMe";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/js/site.js"></script>
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Lobster&family=Nunito&family=Young+Serif&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=PT+Sans&family=Philosopher:wght@700&family=Poppins:wght@400;500&family=Work+Sans&display=swap" rel="stylesheet">
+
+
+<style>
+
+
+    .containerprofile {
+        max-width: 900px;
+        margin: 10px auto;
+        padding: 0px;
+        background-color: #010101;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        border-radius: 7px;
+    }
+
+    .profile {
+        display: flex;
+    }
+
+    .profileimage {
+        flex: 1;
+        text-align: center;
+    }
+
+        .profileimage img {
+            width: 400px;
+            border-radius: 7px;
+        }
+
+    .skillbox img {
+        width: 400px;
+    }
+
+    .profiledescription {
+        flex: 2;
+        padding: 20px;
+        background-color: #010101;
+        border-radius: 7px;
+    }
+
+        .profiledescription img {
+            margin: 2px;
+            width: 48px;
+        }
+
+        .profiledescription a {
+            padding: 2px;
+        }
+
+    .socialmedia {
+        transition: transform 0.2s ease-out;
+    }
+
+
+
+        .socialmedia:hover {
+            transform: scale(1.2);
+        }
+
+
+
+
+    .profiletitle {
+        text-align: center;
+        font-size: 30px;
+        font-weight: 400;
+        margin-top: 200px;
+        color: #2196F3;
+        letter-spacing: 1px;
+        font-family: 'Lobster', cursive;
+    }
+
+    .profileabout {
+        text-align: center;
+        color: whitesmoke;
+        font-size: 18px;
+        line-height: 1.5;
+        padding: 10px;
+        font-family: 'Poppins', sans-serif;
+    }
+
+    .skills {
+        text-align: center;
+    }
+
+
+    .skillboxes {
+        display: flex;
+        justify-content: space-between;
+        background-color: black;
+        border-radius: 7px;
+    }
+
+    .skillbox {
+        flex: 1;
+        background-color: black;
+        border-radius: 7px;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    }
+
+    .skillboxes .text {
+        margin-top: 110px;
+        padding: 40px;
+        color: snow;
+        line-height: 1.5;
+        font-family: 'Poppins', sans-serif;
+    }
+
+
+    .btnback {
+        text-align: center;
+        margin-top: 20px;
+    }
+
+        .btnback a {
+            font-size: 18px;
+            text-decoration: none;
+            color: #333;
+            font-weight: bold;
+        }
+
+            .btnback a:hover {
+                color: #ff5722;
+            }
+
+    .name {
+        font-size: 14px;
+        font-family: 'Lobster', cursive;
+        margin-left: 22px;
+        letter-spacing: 1px;
+    }
+
+</style>
+
+<body>
+
+    <div class="container-fluid containerprofile">
+        <div class="page" id="page1">
+            <div class="profile">
+                <div class="profiledescription">
+                    <p class="name">payam ghaznavi</p>
+                    <div class="profiletitle">I'm a Web Developer</div>
+                    <div class="profileabout">
+                        A Web Developer Specialized In Designing And Developing Websites <span style="color:#E91E63">&</span> Web Applications.
+
+                    </div>
+
+
+                    <div class="d-flex offset-3 ">
+                        <a href="" class="socialmedia"><img src="~/picture/icon1.png" /></a>
+                        <a href="" class="socialmedia">  <img src="~/picture/icon3.png" /></a>
+                        <a href="" class="socialmedia"> <img src="~/picture/icon2.png" /></a>
+                        <a href="" class="socialmedia"><img src="~/picture/icon4.png" /></a>
+                    </div>
+                </div>
+                <div class="profileimage">
+                    <img src="~/picture/5d1d3ae5ede83f3fb18bd6bb3d5c56f6.jpg" />
+                </div>
+            </div>
+        </div>
+        <div class="page" id="page2" style="display:none">
+            <div class="skills">
+
+                <div class="skillboxes">
+
+
+                    <div class="skillbox"><img src="~/picture/af01c525cbca98585bf0b057b83b11f0.jpg" /></div>
+                    <div class="skillbox text "><span style="color:#2196F3;font-family:'Lobster', cursive;font-size:24px">More Amote Me</span><br />As a web developer, I specialize in designing and developing websites and web applications.<br />My responsibility is to create and optimize websites and web-based applications to provide a better user experience.This includes web page design and development,database implementation and integration, performance enhancement, security, and solving technical issues related to web development. Additionally, I focus on creating beautiful and dynamic user interfaces for websites using modern technologies and tools to enhance the user experience to the fullest.<br /><p class="mt-1" style="font-size:10px;color:#2196F3;font-family:'Poppins', sans-serif;">payamghaznavi24@gmail.com</p></div>
+
+
+                </div>
+
+            </div>
+        </div>
+        <div class="text-center">
+
+            <button id="btnback" class="btn mb-2"><img src="~/picture/arrow_back_ios_new_fill0_wght400_grad0_opsz24.svg" style="background:#2196F3" /></button>
+            <button id="btnnext" class="btn mb-2"><img src="~/picture/arrow_forward_ios_fill0_wght400_grad0_opsz24.svg" style="background:#2196F3" /></button>
+        </div>
+    </div>
+
+</body>
+
+<script>
+    $(function () {
+
+        let numpage = 1;
+
+
+        $("#btnnext").click(function () {
+            if (numpage < 2) {
+                numpage++;
+                PageChange(numpage);
+            }
+        });
+
+
+        $("#btnback").click(function () {
+            if (numpage > 1) {
+                numpage--;
+                PageChange(numpage);
+            }
+        });
+
+
+        function PageChange(numpage) {
+            $(".page").fadeOut(500);
+            setTimeout(function () {
+                $(`#page${numpage}`).fadeIn(500);
+            }, 500);
+        }
+
+    });
+</script>

@@ -1,0 +1,30 @@
+﻿#spananim {
+    display: inline-block;
+    overflow: hidden;
+    white-space: nowrap;
+    font-family: 'Work Sans', sans-serif;
+    letter-spacing: 1px;
+    border-left: 3px solid;
+    margin-top: 50px;
+    border-color: darkcyan;
+    padding-left: 10px;
+    font-size: 26px;
+    margin-bottom: 30px;
+
+}
+
+  
+    #spananim span {
+        font-family: 'Work Sans', sans-serif;
+        display: inline-block;
+        opacity: 0; 
+        transform: translateX(-100%);
+        animation: fadeInRight 1.3s ease-in-out forwards; 
+    }
+
+@keyframes fadeInRight {
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}

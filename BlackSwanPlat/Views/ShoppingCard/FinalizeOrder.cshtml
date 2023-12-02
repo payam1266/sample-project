@@ -1,0 +1,200 @@
+﻿@{
+    ViewData["Title"] = "FinalizeOrder";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model List<OrderDetails>
+
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=PT+Sans&family=Philosopher:wght@700&family=Poppins:wght@400;500&family=Work+Sans&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Lobster&family=Nunito&family=Young+Serif&display=swap" rel="stylesheet">
+
+<link href="~/css/finalizedorder.css" rel="stylesheet" />
+<script src="~/js/site.js"></script>
+
+<script src="~/lib/jquery/dist/jquery.js"></script>
+
+@{
+    var uid = "";
+    var i = 1;
+}
+@inject UserManager<ApplicationUser> usermansger
+@if (User.Identity.IsAuthenticated)
+{
+    ApplicationUser user = await usermansger.FindByEmailAsync(User.Identity.Name);
+    <h3 style="margin-top:40px;margin-left:110px; font-family: 'Work Sans' , sans-serif">User :<span style="color:darkcyan"> @($"{user.firstName}  {user.lastName}")</span> </h3>
+    ;
+    <input id="ueserid" value="@user.Id" hidden="hidden" />
+    uid = user.Id;
+}
+
+
+<h2 id="spananim"><span>P</span><span>l</span><span>e</span><span>a</span><span>s</span><span>e</span> <span>C</span><span>o</span><span>n</span><span>f</span><span>i</span><span>r</span><span>m</span> <span>Y</span><span>o</span><span>u</span><span>r</span> <span>I</span><span>n</span><span>f</span><span>o</span><span>r</span><span>m</span><span>a</span><span>t</span><span>i</span><span>o</span><span>n</span></h2>
+<h2 class="justify-content-center align-content-center" style="text-align:center;margin-top:30px;margin-bottom:20px; font-family: 'Work Sans' , sans-serif;letter-spacing:1px">Order  List</h2>
+
+<div class="container">
+
+    <table class="table  shadow p-5 rounded-5">
+        <thead class="text-center text-light " style="background-color:darkcyan">
+            <tr>
+                <th class="p-3">#</th>
+                <th class="p-3">Id</th>
+                <th class="p-3">Full Name</th>
+                <th class="p-3">Address</th>
+                <th class="p-3">Phone</th>
+                <th class="p-3">PostalCode</th>
+                <th class="p-3">Date</th>
+                <th class="p-3">Order Details</th>
+                <th class="p-3">Delete</th>
+                <th class="p-3">Pay</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+
+                @if (item.Order.customerid == uid && item.Order.status == Order.OrderStatus.PendingPayment)
+                {
+                    <tr class="text-center tablorder">
+                        <td class="p-3">@i</td>
+                        <td class="p-3">@item.Order.id</td>
+                        <td class="p-3">@item.Order.fullname</td>
+                        <td class="p-3">@item.Order.address</td>
+                        <td class="p-3">@item.Order.phone</td>
+                        <td class="p-3">@item.Order.postalcode</td>
+                        <td class="p-3">@item.Order.dateTime</td>
+                        <td class="p-3">
+                            <ul class="text-sm-start ">
+                                <li class="text-black-50">Name : @item.productName </li>
+                                <li class="text-black-50">Price: @item.productPrice</li>
+                                <li class="text-black-50">Quantity: @item.quantity</li>
+                                <li class="text-black-50">Subtotal : @item.subtotal</li>
+                            </ul>
+                        </td>
+                        <td>
+                            <a class="col-4 btn btn-outline-danger flex-shrink-0 m-3   btndel" style="font-family: 'Work Sans', sans-serif;letter-spacing:1px;width:100px;" data-order-id="@item.Order.id">Delete</a>
+
+
+
+                        </td>
+                        <td>
+                            <a class="col-4 btn btn-outline-primary flex-shrink-0 m-3 btnpay" style="font-family: 'Work Sans', sans-serif;letter-spacing:1px;width:100px;" data-order-id="@item.Order.id">Pay</a>
+                        </td>
+                    </tr>
+                    i++;
+                }
+
+            }
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+
+<div class="container">
+    <div class="row">
+
+        <div class="col-3  ">
+            <a asp-action="ProductPage" asp-controller="Home" hidden="hidden" id="btnnull" class="col-4 btn btn-outline-dark flex-shrink-0 m-3 " type="button" style="font-family: 'Work Sans', sans-serif;letter-spacing:1px;width:250px;">
+                <i class="bi-cart-fill me-1"></i>
+                Please Place Ordder
+            </a>
+        </div>
+
+
+    </div>
+
+
+
+    <div class="popup" id="popup" style="display:none">
+
+        <img src="~/picture/1039145.png" />
+        <h2>Thank You</h2>
+        <p>Your Order Is Paid</p>
+
+    </div>
+
+</div>
+
+<script>
+
+    $(function () {
+        if ($(".tablorder").html() == null) {
+
+
+            $("#btnnull").attr("hidden", false);
+            $("#spananim").text("You Don't Have Any Order.");
+        }
+
+
+
+
+        $(".btndel").click(function () {
+            var orderId = $(this).data("order-id");
+
+            var row = $(this).closest("tr");
+            $.post("/ShoppingCard/DeleteOrderAndDetails", {
+                id: orderId
+            }, function (value) {
+                if (value === "1") {
+                    $("#popup h2").text("All Done.");
+                    $("#popup p").text("Your Order is Deleted.");
+                    $("#popup").fadeIn(500);
+                    setTimeout(function () {
+                        $("#popup").fadeOut(500);
+
+                        window.location.reload();
+                    }, 3000);
+
+                }
+                else {
+                    alert("Delete Not successful!")
+                }
+
+
+
+
+            });
+        });
+
+        $(".btnpay").click(function () {
+            var orderId = $(this).data("order-id");
+            var row = $(this).closest("tr");
+            $.post("/ShoppingCard/FinalizePayment", { id: orderId }, function (value) {
+                if (value == 1) {
+                    alert("Not Enogh Quantity")
+                }
+                else if (value == 2) {
+                    alert("Product Not Find")
+                }
+                else if (value == 3) {
+                    $("#popup h2").text("Thank You.");
+                    $("#popup p").text("Your Order is Paid.");
+                    $("#popup").fadeIn(500);
+                    setTimeout(function () {
+                        $("#popup").fadeOut(500);
+
+                        window.location.reload();
+                    }, 3000);
+
+                }
+                else {
+                    alert("payemnt Error.")
+                }
+
+
+
+
+            });
+
+        });
+
+
+    });
+
+
+</script>

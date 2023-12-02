@@ -1,0 +1,841 @@
+﻿@{
+    ViewData["Title"] = "OrderList";
+    Layout = "~/Views/Shared/_actionadminlayout.cshtml";
+}
+
+<link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+<link href="~/css/admin.css" rel="stylesheet" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=PT+Sans&family=Philosopher:wght@700&family=Poppins:wght@400;500&family=Work+Sans&display=swap" rel="stylesheet">
+
+<script src="~/js/site.js"></script>
+
+<script src="~/lib/jquery/dist/jquery.js"></script>
+@model List<Order>
+
+@{
+    var uid = "";
+}
+<style>
+    p {
+        color: #607D8B;
+        font-family: 'Poppins', sans-serif;
+    }
+</style>
+
+<div class="container-fluid px-4 ">
+    <div class="row g-3 my-2 d-flex">
+        <div class="col-md-3">
+            <div class="p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded">
+                <div>
+                    <div>
+                        <h3 id="ordercount" style="color:#6610f2" class="fs-2">0</h3>
+
+
+                    </div>
+
+                    <p class="fs-5">Total Order</p>
+
+                </div>
+                <i class="fas fa-gift fs-1 primary-text border rounded-full secondary-bg p-3"></i>
+            </div>
+        </div>
+
+
+
+
+
+
+
+        <div class="col-md-3">
+            <div class="p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded">
+                <div>
+                    <div>
+                        <h3 id="orderamount" style="color:#fd7e14" class="fs-2">0</h3>
+
+
+                    </div>
+
+                    <p class="fs-5">Total Amount</p>
+
+                </div>
+                <i class="fas fa-hand-holding-usd fs-1 primary-text border rounded-full secondary-bg p-3"></i>
+            </div>
+        </div>
+
+
+
+        <div class="col-md-3">
+            <div class="p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded">
+                <div>
+                    <div>
+                        <h3 id="popcategory" style="color:#03A9F4" class="fs-2">0</h3>
+
+
+                    </div>
+
+                    <p class="fs-5">Top Category</p>
+
+                </div>
+                <i class="fas fa-hand-holding-usd fs-1 primary-text border rounded-full secondary-bg p-3"></i>
+            </div>
+        </div>
+
+
+
+
+
+
+        <div class="col-md-3">
+            <div class="p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded">
+                <div>
+                    <div>
+                        <h3 id="popbrand" style="color:#E91E63" class="fs-2">0</h3>
+
+
+                    </div>
+
+                    <p class="fs-5">Top Brand</p>
+
+                </div>
+                <i class="fas fa-hand-holding-usd fs-1 primary-text border rounded-full secondary-bg p-3"></i>
+            </div>
+        </div>
+
+
+
+
+
+
+
+
+        <div class="col-md-3">
+            <div class="p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded">
+                <div>
+                    <div>
+                        <h3 id="totalprod" style="color:#37c683" class="fs-2">0</h3>
+
+
+                    </div>
+
+                    <p class="fs-5">Total Product</p>
+                    <button class="btn btn-outline-dark    shadow " id="btntotalprorecord" style="border-radius:5px;font-size:12px;letter-spacing:1px;font-family: 'Work Sans' , sans-serif ;font-weight:600;width:150px;height:35px">Record </button>
+                </div>
+                <i class="fas fa-hand-holding-usd fs-1 primary-text border rounded-full secondary-bg p-3"></i>
+            </div>
+        </div>
+
+
+
+
+
+
+
+        <div class="col-md-3">
+            <div class="p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded">
+                <div>
+                    <div>
+                        <h3 id="totalsale" style="color:crimson" class="fs-2">0</h3>
+
+
+                    </div>
+
+                    <p class="fs-5">Total Sales</p>
+
+                    <button class="btn btn-outline-dark   shadow " id="btnfiltsale" style="border-radius:5px;font-size:12px;letter-spacing:1px;font-family: 'Work Sans' , sans-serif ;font-weight:600;width:150px;height:35px">Filter </button>
+
+
+                    <dialog id="divfiltsale" style="display:none;justify-content:center;align-items:center;position:absolute;left:38%;padding:20px;border:none;width:300px">
+
+                        <button id="btnclose1" class="btn-close btn-sm "></button>
+                        <input type="date" id="startDate" class="form-control my-3" required>
+
+
+                        <input type="date" id="endDate" class="form-control my-3" required>
+
+                        <div class="d-flex">
+                            <button class="btn btn-outline-dark  my-3 " style="font-family: 'Work Sans', sans-serif;letter-spacing:1px;width:150px;" id="filterButton">Apply</button>
+                            <h3 id="filsale" style="color:#03A9F4;display:none;" class="fs-2 my-3 mx-auto">0</h3>
+                        </div>
+
+                    </dialog>
+
+                </div>
+                <i class="fas fa-hand-holding-usd fs-1 primary-text border rounded-full secondary-bg p-3"></i>
+            </div>
+        </div>
+
+
+
+
+
+
+
+        <div class="col-md-3">
+            <div class="p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded">
+                <div>
+                    <div>
+                        <h3 id="totalprsale" style="color:#37c683" class="fs-2">0</h3>
+
+
+                    </div>
+
+                    <p class="fs-5">Total Goods Sold</p>
+                    <button class="btn btn-outline-dark   shadow " id="btnfiltpr" style="border-radius:5px;font-size:12px;letter-spacing:1px;font-family: 'Work Sans' , sans-serif ;font-weight:600;width:150px;height:35px">Filter </button>
+
+
+                    <dialog id="divfiltpr" style="display:none;justify-content:center;align-items:center;position:absolute;left:58%;padding:20px;border:none;width:300px;">
+
+                        <button id="btnclosefilpr" class="btn-close btn-sm "></button>
+                        <input type="date" id="startDate1" class="form-control my-3" required>
+
+
+                        <input type="date" id="endDate1" class="form-control my-3" required>
+
+                        <div class="d-flex">
+                            <button class="btn btn-outline-dark  my-3 " style="font-family: 'Work Sans', sans-serif;letter-spacing:1px;width:150px;" id="filterButtonprd">Apply</button>
+                            <h3 id="filpro" style="color:#9C27B0;display:none;" class="fs-2 my-3 mx-auto">0</h3>
+                        </div>
+
+                    </dialog>
+
+
+                </div>
+                <i class="fas fa-hand-holding-usd fs-1 primary-text border rounded-full secondary-bg p-3"></i>
+            </div>
+        </div>
+
+
+        <div class="col-md-3">
+            <div class="p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded">
+                <div>
+                    <div id="popular">
+
+                        <h3 id="popularproduct" style="color:#37c683" class="fs-2"><input class="form-control small" type="number" id="topnum" value="3" /></h3>
+
+
+                    </div>
+
+                    <p class="fs-5">Popular Product</p>
+                    <button class="btn btn-outline-dark  shadow " style="border-radius:5px;font-size:12px;letter-spacing:1px;font-family: 'Work Sans' , sans-serif ;font-weight:600;width:150px;height:35px" id="pproduct">Popular Product </button>
+                </div>
+                <i class="fas fa-hand-holding-usd fs-1 primary-text border rounded-full secondary-bg p-3"></i>
+            </div>
+        </div>
+
+
+
+        <div class="col-md-3">
+            <div class="p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded">
+                <div>
+                    <div id="topcust">
+
+                        <h3 id="topcustomer" style="color:#37c683" class="fs-2"><input class="form-control small" type="number" id="tnum" value="3" /></h3>
+
+
+                    </div>
+
+                    <p class="fs-5">Top Customer</p>
+                    <button class="btn btn-outline-dark    shadow " style="border-radius:5px;font-size:12px;letter-spacing:1px;font-family: 'Work Sans' , sans-serif ;font-weight:600;width:150px;height:35px" id="tcustomer">Top Customer</button>
+                </div>
+                <i class="fas fa-hand-holding-usd fs-1 primary-text border rounded-full secondary-bg p-3"></i>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+
+<h2 class="justify-content-center align-content-center" style="text-align:center;margin-top:50px;margin-bottom:20px; font-family: 'Work Sans' , sans-serif;letter-spacing:1px;color:#343a40">Order  List</h2>
+<div class="container ">
+
+
+
+
+    <table class="table table-striped bg-light table-hover shadow product-row " style="margin-bottom:50px;">
+
+        <thead class="  text-light " style="font-size:14px;background-color:#4f68b7;height:42px;font-size:15px">
+            <tr>
+                <th>#</th>
+                <th>Id</th>
+                <th>name</th>
+                <th>Phone</th>
+                <th>Address</th>
+                <th>City</th>
+                <th>PostalCode</th>
+                <th>Status</th>
+                <th>PaymentMethod</th>
+                <th>TotalPrice</th>
+                <th>Date</th>
+                <th>Details</th>
+                <th>Delete</th>
+                <th>Edit</th>
+
+            </tr>
+        </thead>
+
+        <tbody>
+            @{
+                var i = 1;
+                @foreach (var item in Model)
+                {
+                    <tr id="editerow">
+                        <td>@i</td>
+
+                        <td>@item.id</td>
+                        <td class="fullname ">@item.fullname</td>
+                        <td class="phone">@item.phone</td>
+                        <td class="address">@item.address</td>
+                        <td class="city">@item.city</td>
+                        <td class="postalcode">@item.postalcode</td>
+
+                        @if (@item.status == Order.OrderStatus.Paid)
+                        {
+
+                            <td class="status  text-success">@item.status</td>
+                        }
+                        @if (@item.status == Order.OrderStatus.PendingPayment)
+                        {
+
+                            <td class="status text-primary">@item.status</td>
+                        }
+                        @if (@item.status == Order.OrderStatus.Canceled)
+                        {
+
+                            <td class="status text-danger">@item.status</td>
+                        }
+                        <td class="paymentmethod">@item.paymentmethod</td>
+                        <td class="totalPrice">@item.totalPrice</td>
+                        <td class="date text-sm-center">@item.dateTime</td>
+                        <td>
+                            <a id="btndetail" class="col-4 btn btn-outline-dark flex-shrink-0 m-3 details-btn" data-orderid="@item.id" style="font-family: 'Work Sans', sans-serif;letter-spacing:1px;width:100px;">
+
+                                Details
+                            </a>
+                        </td>
+                        <td>
+                            <a id="btndelete" class="col-4 btn btn-outline-danger flex-shrink-0 m-3 delete-btn" data-orderid="@item.id" style="font-family: 'Work Sans', sans-serif;letter-spacing:1px;width:100px;">
+
+                                Delete
+                            </a>
+                        </td>
+                        <td>
+                            <a class="col-4 btn btn-outline-primary flex-shrink-0 m-3 edit-btn" data-orderid="@item.id" style="font-family: 'Work Sans', sans-serif;letter-spacing:1px;width:100px;">
+                                Edit
+                            </a>
+                            <a class="col-4 btn btn-outline-success flex-shrink-0 m-3 update-btn" data-orderid="@item.id" style="display: none;font-family: 'Work Sans', sans-serif;letter-spacing:1px;width:100px;">
+                                Update
+                            </a>
+                        </td>
+
+
+
+                    </tr>
+
+
+                    i++;
+                }
+            }
+        </tbody>
+    </table>
+    <div class="container text-center m-3">
+        <button id="btnclose" class="btn-close " style="display:none;"></button>
+    </div>
+
+    <table id="order-details-table" class="table table-striped bg-light table-hover shadow product-row" style="display:none;">
+
+        <thead class="text-light " style="font-size:14px;background-color:#d63384;height:42px;font-size:16px">
+            <tr id="rowedite">
+                <th>#</th>
+                <th>OrderId</th>
+                <th>Id</th>
+                <th>productId</th>
+                <th>Product Name</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Subtotal</th>
+                <th>Delete</th>
+                <th>Edite</th>
+                <th>Update</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+
+    <div class="container text-center m-3" id="divselect">
+        <button id="btnclose4" class="btn-close " style="display:none;margin-bottom:20px"></button>
+        <table class="table table-striped text-dark bg-light shadow table-hover  " id="tbl">
+        </table>
+    </div>
+    <div class="container text-center" id="divselecttopcust">
+        <button class="btn-close" id="btnclosetopcuet" style="display:none;margin-bottom:20px"></button>
+        <table class="table table-striped text-dark bg-light shadow table-hover  " id="tbl2">
+        </table>
+
+    </div>
+
+
+    <div class="container text-center" id="divtopcust">
+        <button id="btnclosetopcust" class="btn-close" style="display:none;margin-bottom:20px"></button>
+        <table class="table table-striped text-dark bg-light shadow table-hover  " id="tbltopcust">
+        </table>
+
+    </div>
+
+
+</div>
+<script>
+
+    $(".details-btn").click(function () {
+
+        var orderid = $(this).data("orderid");
+        $("#btnclose").fadeIn(500);
+
+        $.post("/Admin/GetOrderDetails", { id: orderid }, function (value) {
+
+
+
+
+
+            var table = $("#order-details-table tbody");
+
+
+            table.empty();
+
+
+            $.each(value, function (index, detail) {
+                var row = `<tr class="rowdet">
+                                        <td>${index + 1}</td>
+                                                <td class="orderId">${detail.orderId}</td>
+                                                    <td>${detail.id}</td>
+                                                            <td class="productId">${detail.productId}</td>
+                                                                    <td class="productName">${detail.productName}</td>
+                                                                            <td class="productPrice">${detail.productPrice}</td>
+                                                                                    <td class="quantity">${detail.quantity}</td>
+                                                                                            <td class="subtotal">${detail.subtotal}</td>
+                                                                                                <td><button style="width:125px" class="btn  btn-outline-danger delete-detail"  data-id=${detail.id} >Delete</button></td>
+                                                                                                    <td><button style="width:125px" class="btn  btn-outline-primary  btn-edite  " data-id= ${detail.id}>Edit</button></td>
+                                                                                                        <td><button style="width:125px" class="btn  btn-outline-success  btn-update  "  data-id=${detail.id}>Update</button></td>
+                                                                                                        </tr>`;
+
+
+
+                table.append(row);
+            });
+
+
+            $("#order-details-table").show();
+        })
+
+
+    });
+
+    $("#btnclose").click(function () {
+        $("#order-details-table").fadeOut(500);
+        $(this).fadeOut(500);
+
+    });
+
+
+
+
+    $(".delete-btn").click(function () {
+
+        var orderid = $(this).data("orderid");
+        var row = $(this).closest("tr");
+
+        $.post("/Admin/DeleteOrderWithDeyails", { id: orderid }, function (value) {
+
+            alert(value);
+            row.remove();
+            totalorder();
+            totalamount();
+            totalsale();
+            totalprsales();
+            totalproduct();
+            TopCat();
+            TopBrand();
+        })
+
+
+    });
+
+
+    $("#order-details-table").on("click", ".delete-detail", function () {
+        let row = $(this).closest("tr");
+        let dtailid = $(this).data("id");
+        let orderId = row.find(".orderId").text();
+
+        $.post("/Admin/DeleteOrderDetail", { id: dtailid, orderId: orderId }, function (value) {
+
+            alert(value)
+
+
+            row.remove();
+            totalorder();
+            totalamount();
+            totalsale();
+            totalprsales();
+            totalproduct();
+            TopCat();
+            TopBrand();
+        });
+    });
+
+
+    $(".edit-btn").click(function () {
+
+        var orderId = $(this).data("orderid");
+
+
+        var row = $(this).closest("tr");
+
+        row.attr("contenteditable", true);
+
+
+        row.find(".update-btn").fadeIn(400);
+        $(this).hide();
+    });
+
+
+    $(".update-btn").click(function () {
+        var orderId = $(this).data("orderid");
+        var row = $(this).closest("tr");
+
+
+        var updatedData = {
+            fullname: row.find(".fullname").text(),
+            phone: row.find(".phone").text(),
+            address: row.find(".address").text(),
+            city: row.find(".city").text(),
+            status: row.find(".status").text(),
+            paymentmethod: row.find(".paymentmethod").text(),
+            postalcode: row.find(".postalcode").text(),
+            totalPrice: row.find(".totalPrice").text(),
+            dateTime: row.find(".date").text(),
+        };
+
+        $.post("/Admin/UpdateOrder", { id: orderId, updatedData: updatedData }, function (value) {
+            alert(value)
+            row.attr("contenteditable", false);
+            totalorder();
+            totalamount();
+            totalsale();
+            totalprsales();
+            totalproduct();
+            TopCat();
+            TopBrand();
+
+        });
+
+        var row = $(this).closest("tr");
+
+        row.find(".edit-btn").show();
+        row.find("tr").attr("contenteditable", false);
+
+        $(this).hide();
+    });
+    $("#order-details-table").on("click", ".btn-edite ", function () {
+        let rowdet = $(this).closest("tr");
+
+
+
+        rowdet.attr("contenteditable", true);
+
+
+    });
+
+    $("#order-details-table").on("click", ".btn-update ", function () {
+        rowdet = $(this).closest("tr");
+        let orderdetails = $(this).data("id");
+
+        var updatedDetail = {
+
+            productName: rowdet.find(".productName").text(),
+            productPrice: rowdet.find(".productPrice").text(),
+            quantity: rowdet.find(".quantity").text(),
+            subtotal: rowdet.find(".subtotal").text(),
+
+        };
+        $.post("/Admin/UpdateOrderDetails", { id: orderdetails, updatedDetail: updatedDetail }, function (value) {
+            alert(value)
+
+            rowdet.attr("contenteditable", false);
+            totalorder();
+            totalamount();
+            totalsale();
+            totalprsales();
+            totalproduct();
+            TopCat();
+            TopBrand();
+        });
+
+
+    });
+    function totalorder() {
+        $.post("/Admin/GetTotalOrder", function (value) {
+            $("#ordercount").text(value);
+        })
+    }
+
+
+    function totalamount() {
+        $.post("/Admin/GetTotalAmount", function (value) {
+            $("#orderamount").text(value);
+        })
+    }
+
+
+    function totalsale() {
+        $.post("/Admin/GetOrderPaid", function (value) {
+            $("#totalsale").text(value);
+        })
+    }
+
+
+
+
+    function totalprsales() {
+        $.post("/Admin/GetTotalSaleProduct", function (value) {
+            $("#totalprsale").text(value);
+        })
+    }
+
+
+
+    $("#pproduct").click(function () {
+        let i = 1;
+        let tbl = $("#tbl");
+        $("#divselect").fadeIn(500);
+        $("#tbl").html(null);
+        $("#btnclose4").fadeIn(500);
+        $.post("/Admin/GetPopularProduct", { num: $("#topnum").val() }, function (value) {
+
+            let th = `<thead class="  text-light"style='background-color:#009688'><tr><th>#</th><th>id</th><th>Name</th><th>Count</th><th>Price</th><tr></thead>`
+            tbl.append(th)
+            let tbody = "<tbody></tbody>"
+
+            tbl.append(tbody)
+
+            value.forEach((p, index) => {
+
+
+                let tr = `<tr><td>${i}</td>
+                                                                        <td>${p.id}</td>
+                                                                        <td>${p.name}</td>
+                                                                        <td>${p.count}</td>
+                                                                        <td>${p.price}</td>
+
+
+                                                                       </tr>`
+                tbl.append(tr)
+                i++
+
+            })
+
+        });
+    })
+
+    $("#btnclose4").click(function () {
+        $("#divselect").fadeOut(500);
+
+    })
+
+
+
+
+    $("#tcustomer").click(function () {
+        let k = 1;
+        let tbl2 = $("#tbl2");
+        $("#btnclosetopcuet").fadeIn(500);
+        $("#divselecttopcust").show();
+        $("#tbl2").html(null);
+
+        $.post("/Admin/GetTopCustomer", { num: $("#tnum").val() }, function (value) {
+            console.log(value)
+
+            let th2 = `<thead class="  text-light"style='background-color:#FF5722'><tr><th>#</th><th>FirstName</th><th>LastName</th><th>age</th><th>City</th><th>Email</th><th>Phone</th><th>Order Details</th</tr></thead>`
+            tbl2.append(th2)
+            let tbody2 = "<tbody></tbody>"
+
+            tbl2.append(tbody2)
+
+            value.forEach((p, index) => {
+
+
+                let tr2 = `<tr><td>${k}</td>
+                                                                                    <td>${p.firstName}</td>
+                                                                                    <td>${p.lastName}</td>
+                                                                                        <td>${p.age}</td>
+                                                                                            <td>${p.city}</td>
+                                                                                                <td>${p.email}</td>
+                                                                                                    <td>${p.phoneNumber}</td>
+
+                                                                                                                      <td><button style='width:125px' class='btn  btn-outline-dark   'onclick="F2('${p.id}')" >Details</button></td>
+
+
+
+                                                                               </tr>`
+                tbl2.append(tr2)
+                k++
+
+            })
+
+        });
+
+    });
+    $("#btnclosetopcuet").click(function () {
+        $("#divselecttopcust").fadeOut(500);
+
+    });
+
+
+
+
+    function F2(id) {
+        let z = 1;
+        let tblcust = $("#tbltopcust");
+
+        $("#divtopcust").fadeIn(500);
+        $("#tbltopcust").html(null);
+        $("#btnclosetopcust").fadeIn(500);
+
+        $.post("/Admin/OrderDetailsTopCustomer", { userid: id }, function (value) {
+
+
+            let thcust = `<thead class="  text-light"style='background-color:#4CAF50'><tr><th>#</th><th>Product Name</th><th>Producy Price</th><th>Quantity</th><th>Subtotal</th></tr></thead>`
+            tblcust.append(thcust)
+            let tbodycust = "<tbody></tbody>"
+
+            tblcust.append(tbodycust)
+
+            value.forEach((s, index) => {
+
+
+                let trcust = `<tr><td>${z}</td>
+                                                                                        <td>${s.productName}</td>
+                                                                                            <td>${s.productPrice}</td>
+                                                                                                <td>${s.quantity}</td>
+                                                                                                    <td>${s.subtotal}</td>
+
+
+
+
+                                                                               </tr>`
+                tblcust.append(trcust);
+                z++;
+
+            });
+
+
+            $("#btnclosetopcust").click(function () {
+                $("#divtopcust").fadeOut(500);
+
+            });
+
+
+        });
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    function totalproduct() {
+        $.post("/Admin/GetTotalProduct", function (value) {
+            $("#totalprod").text(value);
+        });
+    }
+
+
+    $("#btnfiltsale").click(function () {
+        $("#divfiltsale").fadeIn(500);
+
+    });
+
+    $("#btnclose1").click(function () {
+        $("#divfiltsale").fadeOut(500);
+    });
+
+
+
+
+    $("#filterButton").click(function () {
+        let startDate = $("#startDate").val();
+        let endDate = $("#endDate").val();
+
+
+        $.post("/Admin/FilterOrders", { startDate: startDate, endDate: endDate }, function (value) {
+            $("#filsale").show();
+            $("#filsale").text(value);
+
+        });
+    });
+
+
+
+
+
+    $("#btnfiltpr").click(function () {
+        $("#divfiltpr").fadeIn(500);
+
+    });
+
+    $("#btnclosefilpr").click(function () {
+        $("#divfiltpr").fadeOut(500);
+    });
+
+
+    $("#filterButtonprd").click(function () {
+        let startDate = $("#startDate1").val();
+        let endDate = $("#endDate1").val();
+
+
+        $.post("/Admin/Filterprsold", { startDate: startDate, endDate: endDate }, function (value) {
+            $("#filpro").show();
+            $("#filpro").text(value);
+
+        });
+    });
+
+    function TopCat() {
+        $.post("/Admin/GetPopularCategory", function (value) {
+            $("#popcategory").text(value);
+        });
+    }
+
+    function TopBrand() {
+        $.post("/Admin/GetPopularBrand", function (value) {
+            $("#popbrand").text(value);
+        });
+    }
+    $("#btntotalprorecord").click(function () {
+
+        $.post("/Admin/RecordTotalinventory", function (value) {
+            alert(value)
+        });
+    });
+
+
+    $(function () {
+        totalorder();
+        totalamount();
+        totalsale();
+        totalprsales();
+        totalproduct();
+        TopCat();
+        TopBrand();
+    })
+</script>

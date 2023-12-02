@@ -1,0 +1,27 @@
+﻿
+@import url('https://fonts.googleapis.com/css2?family=PT+Sans&family=Poppins:wght@400;500&family=Work+Sans&display=swap');
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #dce2e2
+}
+.custom-footer {
+    background-color: transparent;
+    border: none; 
+   
+   
+}
+.custum-bg{
+    height:360px;
+    background:#f1f1f1;
+    border-radius:12px;
+
+}
+h2 {
+    color: #212529;
+}
+button{
+    background:darkcyan;
+}
+
+

@@ -1,0 +1,145 @@
+﻿@{
+    ViewData["Title"] = "UserPanel";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+}
+
+<script src="~/js/site.js"></script>
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script src="~/js/userpanel.js"></script>
+
+<link href="~/css/userpanel.css" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=PT+Sans&family=Philosopher:wght@700&family=Poppins:wght@400;500&family=Work+Sans&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Lobster&family=Nunito&family=Young+Serif&display=swap" rel="stylesheet">
+
+@model UserProfileViewModel
+
+<div class="drop">
+    <button class="btnmenu">Action</button>
+    <ul class="dropmunu">
+        <li><a href="#" id="change">Chang Password</a></li>
+        <li><a href="#" id="orders">‌My Orders</a></li>
+        <li><a href="#" id="favorite">My Favorite</a></li>
+
+    </ul>
+</div>
+@inject UserManager<ApplicationUser> usermansger
+@if (User.Identity.IsAuthenticated)
+{
+    ApplicationUser user = await usermansger.FindByEmailAsync(User.Identity.Name);
+
+
+    var userid = user.Id;
+    <input id="inpuid" hidden="hidden" value="@userid" />
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6 shadow p-2" style="background-color:#055160;border-radius:10px;">
+            <div class="card" style="background-color:#d1cfc7">
+                <div class="card-header" style="background-color:black;border-bottom-left-radius:10px;border-bottom-right-radius:10px;height:55px;">
+                    <h3 class="text-center" style="color:#c4bea2;font-family: 'Philosopher', sans-serif;font-size:14px;letter-spacing:2px;font-size:30px;">User Profile</h3>
+                </div>
+                <div class="card-body text-center py-2 m-4">
+
+
+                    <img src="~/picture/download.jpg" class="img-thumbnail mb-3" style="border-radius:50%" width="200" />
+
+                    <div class="form-group">
+                        <label class="form-label " style="color:#9a1941;font-family: 'Philosopher', sans-serif;font-size:14px;letter-spacing:1px;font-size:22px;">First Name:</label>
+                        <input type="text" id="firstname" class="form-control edit" value="@Model.firstName" readonly />
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label " style="color:#9a1941;font-family: 'Philosopher', sans-serif;font-size:14px;letter-spacing:1px;font-size:22px;">Last Name:</label>
+                        <input required type="text" id="lastname" class="form-control edit" value="@Model.lastName" readonly />
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label " style="color:#9a1941;font-family: 'Philosopher', sans-serif;font-size:14px;letter-spacing:1px;font-size:22px;">User name:</label>
+                        <input required type="text" id="username" class="form-control edit" value="@Model.UserName" readonly />
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label " style="color:#9a1941;font-family: 'Philosopher', sans-serif;font-size:14px;letter-spacing:1px;font-size:22px;">Phone:</label>
+                        <input required type="text" id="phone" class="form-control edit" value="@Model.PhoneNumber" readonly />
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label " style="color:#9a1941;font-family: 'Philosopher', sans-serif;font-size:14px;letter-spacing:1px;font-size:22px;">City:</label>
+                        <input required type="text" id="city" class="form-control edit" value="@Model.city" readonly />
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label " style="color:#9a1941;font-family: 'Philosopher', sans-serif;font-size:14px;letter-spacing:1px;font-size:22px;">Age:</label>
+                        <input required type="text" id="age" class="form-control edit" value="@Model.age" readonly />
+                    </div>
+                    <div class=" form-group">
+                        <a class="col-4 btn btn-outline-dark mt-4 editbtn" style="font-family: 'Work Sans', sans-serif;letter-spacing:1px;width:225px;">
+                            Edit
+                        </a>
+                        <a class="col-4 btn btn-outline-dark  mt-4 uodatebtn" data-userid="@Model.id" style="font-family: 'Work Sans', sans-serif;letter-spacing:1px;width:225px;display:none">
+                            Update
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="popup" id="popup" style="display:none">
+
+        <img src="~/picture/1039145.png" />
+        <h2>All Done</h2>
+        <p>Edit Your Profile Successful.</p>
+
+
+
+    </div>
+
+</div>
+
+<div class="container mt-4 changepass" style="display:none;">
+    <div class="text-center">
+        <button id="btnclose1" class="btn-close mb-3"></button>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-md-6 shadow p-4 text-center " style="background-color:#d1cfc7;border-radius:10px;">
+            <form id="changePasswordForm">
+                <div class="form-group">
+                    <label class="form-label" style="color:#055160;font-family: 'Philosopher', sans-serif;font-size:14px;letter-spacing:1px;font-size:22px;">Current Password</label>
+                    <input type="password" class="form-control" id="currentPassword" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label mt-2" style="color:#055160;font-family: 'Philosopher', sans-serif;font-size:14px;letter-spacing:1px;font-size:22px;">New Password</label>
+                    <input type="password" class="form-control" id="newPassword" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label mt-2" style="color:#055160;font-family: 'Philosopher', sans-serif;font-size:14px;letter-spacing:1px;font-size:22px;">Confirm New Password</label>
+                    <input type="password" class="form-control" id="confirmPassword" required>
+                </div>
+                <button type="submit" class="col-4 btn btn-outline-dark mt-4 " style="font-family: 'Work Sans', sans-serif;letter-spacing:1px;width:225px;">
+                    Change Password
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="container text-center mt-4" id="divselect" style="display:none">
+    <button id="btnclose2" class="btn-close " style="margin-bottom:20px"></button>
+    <table class="table text-dark  shadow table-hover  " style="background-color:#d1cfc7;" id="tbl3">
+    </table>
+</div>
+<div class="container text-center mt-4" id="divselect2" style="display:none">
+    <button id="btnclose3" class="btn-close " style="margin-bottom:20px"></button>
+    <table class="table  text-dark  shadow table-hover  " style="background-color:#d1cfc7;" id="tbl4">
+    </table>
+</div>
+
+<div class="container text-center mt-4" id="divselect3" style="display:none">
+    <button id="btnclose5" class="btn-close " style="margin-bottom:20px"></button>
+    <table class="table  text-dark  shadow table-hover  " style="background-color:#d1cfc7;" id="tbl5">
+    </table>
+</div>
+
+
+<div id="productContainer" class="row row-cols-3 row-cols-md-3 g-4" style="padding:30px">
+</div>
+
+

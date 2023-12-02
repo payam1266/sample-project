@@ -1,0 +1,938 @@
+﻿@{
+    ViewData["Title"] = "ProductPage";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@model List<Product>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ProductPage</title>
+
+    <script src="~/js/site.js"></script>
+
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+
+    <link href="~/css/productpage.css" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=PT+Sans&family=Philosopher:wght@700&family=Poppins:wght@400;500&family=Work+Sans&display=swap" rel="stylesheet">
+    <style>
+
+
+        .cardbody {
+            opacity: 0;
+        }
+
+            .cardbody.p {
+                opacity: 1;
+                transition: transform 0.3s ease-in-out, opacity 0.9s ease-in-out;
+            }
+
+
+
+        .loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #333333;
+            transition: opacity 0.75s, visibility 0.75s;
+        }
+
+        .loader--hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .loader::after {
+            content: "";
+            width: 75px;
+            height: 75px;
+            border: 15px solid #dddddd;
+            border-top-color: #009578;
+            border-radius: 50%;
+            animation: loading 0.75s ease infinite;
+        }
+
+
+
+
+
+
+
+        .titleproduct {
+            color: #3f51b5;
+            font-family: 'Philosopher', sans-serif;
+            font-size: 26px;
+            border-bottom: 0px solid;
+            padding-bottom: 2px;
+            font-size: 26px;
+            transition: color 0.3s ease-in-out;
+        }
+
+        .brandproduct {
+            color: #fd7e14;
+            font-family: 'Philosopher', sans-serif;
+            font-size: 18px;
+            transition: color 0.3s ease-in-out;
+        }
+
+
+
+        .cardproduct:hover .desproduct {
+            max-height: 100px;
+        }
+
+        .priceproduct h2 {
+            color: darkcyan;
+            font-family: 'Philosopher', sans-serif;
+            font-size: 28px;
+            transition: color 0.3s ease-in-out;
+        }
+
+        .btnwatch {
+            background-color: #3f51b5;
+            color: aliceblue;
+            font-family: 'Philosopher', sans-serif;
+            font-size: 14px;
+            letter-spacing: 1px;
+            transition: background-color 0.1s ease-in-out;
+        }
+
+            .btnwatch:hover {
+                background-color: #fd7e14;
+                color: #001bb0;
+            }
+
+        .detproduct {
+            max-height: 0;
+            overflow: hidden;
+            color: darkcyan;
+            font-family: 'Philosopher', sans-serif;
+            font-size: 18px;
+            transform: translateX(-20px);
+            opacity: 0;
+            transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out,max-height 0.5s ease-in-out;
+            overflow: hidden;
+        }
+
+        .cardproduct:hover .detproduct {
+            max-height: 100px;
+        }
+
+
+
+
+
+        .card {
+            transition: transform 0.5s ease-in-out;
+        }
+
+            .card:hover {
+                transform: scale(1.01);
+                box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
+            }
+
+
+
+                .card:hover .detproduct {
+                    transform: translateX(0);
+                    opacity: 1;
+                }
+
+
+
+        .desproduct {
+            transform: translateX(20px);
+            opacity: 0;
+            transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out, max-height 0.5s ease-in-out;
+            overflow: hidden;
+            color: #607D8B;
+            font-size: 14px;
+            font-family: 'Poppins', sans-serif;
+            max-height: 0;
+        }
+
+        .card:hover .desproduct {
+            transform: translateX(0);
+            opacity: 1;
+            max-height: 100px;
+        }
+
+    </style>
+</head>
+
+
+
+
+<body style="background-color:lightblue; font-family: 'Poppins' , sans-serif;">
+
+
+
+
+    @inject UserManager<ApplicationUser> usermansger
+    @if (User.Identity.IsAuthenticated)
+    {
+        ApplicationUser user = await usermansger.FindByEmailAsync(User.Identity.Name);
+
+
+        var userid = user.Id;
+        <input id="inpuid" hidden="hidden" value="@userid" />
+    }
+
+
+
+
+
+
+    <div class="loader "></div>
+
+
+
+    <main id="contmain" class="container">
+        <section id="services" style="padding:15px 15px">
+
+
+            <div class="row g-5 justify-content-around ">
+                <div class="col-md-6 d-flex justify-content-center align-items-center order-1">
+                    <div class="col">
+                        <div class="card p-3 mb-3 border-0 cardbody " style="max-width:450px;background-color:#bed3cc;">
+                            <div class="row g-0">
+                                <div class="col-md-4 gy-3  " style="margin-top:2px">
+                                    <img src="~/picture/4bc592cf4455dc0c5ff0d581926165f9.jpg" style="margin:0;border-radius:7px" />
+
+                                </div>
+                                <div class="col-md-8 ">
+                                    <div class="card-body ">
+                                        <h5 class="card-title" style="font-family: 'Philosopher', sans-serif;letter-spacing:0.5px;color:#212529;font-size:20px">Find The Perfect Fit</h5>
+                                        <p class="card-text" style="color:#212529;font-family: 'Poppins', sans-serif;letter-spacing:1px;font-size:14px">
+                                            Discover the Path to the Ideal Fit: Crafting Tailored Solutions that Go Above and Beyond Expectations
+                                        </p>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="card p-3 mb-3 border-0 cardbody " style="max-width:450px;background-color:#efc8c8">
+                            <div class="row g-0">
+                                <div class="col-md-4 gy-3 " style="margin-top:2px">
+
+                                    <img src="~/picture/1c0b6d012c5ee924a7ac2fd51b0bb120.jpg" style="margin:0;border-radius:7px" />
+                                </div>
+                                <div class="col-md-8 ">
+                                    <div class="card-body ">
+                                        <h5 class="card-title" style="font-family: 'Philosopher', sans-serif;letter-spacing:0.5px;color:#212529;font-size:20px">Contact Our Sellers</h5>
+                                        <p class="card-text" style="color:#212529;font-family: 'Poppins', sans-serif;letter-spacing:1px;font-size:14px">
+                                            Connect with Our Esteemed Network of Sellers for Unparalleled Products and Services
+                                        </p>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="card p-3 mb-3 float-start border-0 cardbody " style="max-width:450px;background-color:#eeefc8">
+
+                            <div class="row g-0">
+                                <div class="col-md-4 gy-3" style="margin-top:2px">
+
+                                    <img src="~/picture/6fa299d11653d0fd92e9661269f812f2.jpg" style="margin:0;border-radius:7px" />
+                                </div>
+                                <div class="col-md-8 ">
+                                    <div class="card-body ">
+                                        <h5 class="card-title" style="  font-family: 'Philosopher', sans-serif;letter-spacing:0.5px;color:#212529;font-size:20px">Free Exchange</h5>
+                                        <p class="card-text" style="color:#212529;  font-family: 'Poppins', sans-serif;letter-spacing:1px;font-size:14px">
+                                            Experience a Hassle-Free Product Exchange Policy: No Fees, No Worries, Just Great Service!
+                                        </p>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col" style="padding-right:0px">
+                    <img src="~/picture/c3a0fa358d58f3d253aa351733b71b01.jpg" class="w-75 " height="660px" style="margin-left:140px;margin-top:4px;border-radius:10px;" />
+
+                </div>
+            </div>
+            <h2 style="text-align:center;font-family:'High Tower Text';font-weight:600;font-size:60px;margin-top:25px;margin-bottom:45px;margin-right:22px;color:#212529">Comfortable Buy <span style="color:crimson">&</span> Comfortable Live</h2>
+        </section>
+    </main>
+
+
+
+
+
+
+
+
+
+    <div class="container-fluid mt-5 pall" style="background-color:#dce2e2;padding:30px">
+
+        <h2 class="text-center s" style="text-align:center;padding-bottom:5px;font-family: 'Work Sans', sans-serif;font-weight:700;font-size:32px;margin-top:50px;color:#212529"><span style="border-bottom:4px solid;border-color:crimson;padding:3px;color:#212529">Our</span>  Product</h2>
+
+
+        <div class="text-center mb-3" style="margin-top:50px">
+            <button class="btnp100 btn btn-outline-dark flex-shrink-0 m-3" style="font-family: 'Work Sans', sans-serif;letter-spacing:1px;width:150px;">Max $100</button>
+            <button class="btnp150 btn btn-outline-dark flex-shrink-0 m-3" style="font-family: 'Work Sans', sans-serif;letter-spacing:1px;width:150px;">Max $150</button>
+            <button class="btn btn btn-outline-dark flex-shrink-0 m-3" style="font-family: 'Work Sans', sans-serif;letter-spacing:1px;width:150px;" onclick="showAll()">All Category</button>
+            <button class="btn btn btn-outline-dark flex-shrink-0 m-3" style="font-family: 'Work Sans', sans-serif;letter-spacing:1px;width:150px;" onclick="showCategory('bag')">BAG</button>
+            <button class="btn btn btn-outline-dark flex-shrink-0 m-3" style="font-family: 'Work Sans', sans-serif;letter-spacing:1px;width:150px;" onclick="showCategory('dress')">DRESS</button>
+            <button class="btn btn btn-outline-dark flex-shrink-0 m-3" style="font-family: 'Work Sans', sans-serif;letter-spacing:1px;width:150px;" onclick="showCategory('shoe')">SHOE</button>
+        </div>
+
+
+        <section id="product" class="mt-5 ">
+
+
+            <div class=" product" data-category="bag" id="bagsection">
+                <h2 style="text-align:center;padding-bottom:5px;font-family: 'Work Sans', sans-serif;color:#dc143c;font-size:28px">Bag section</h2>
+
+                <div class="row  row-cols-4 g-4 ">
+
+                    @foreach (var item in Model)
+                    {
+
+
+                        if (item.productCategory.name == "bag")
+                        {
+
+
+                            <div class="card h-100 shadow  col-3 m-5 p-4 justify-content-evenly cardproduct ">
+                                @foreach (var item2 in item.productImages)
+                                {
+
+                                    <img src="@($"data:image/png;base64,{Convert.ToBase64String(item2.img)}")" class="card-img-top img-fluid custum-bg" />
+                                    break;
+                                }
+                                <div class="card-body p-2">
+
+
+                                    <div class="card-title titleproduct ">@item.name</div>
+                                    <div class="card-title brandproduct">Brand : @item.brand.name</div>
+                                    <div class="card-title detproduct">Color : @item.color</div>
+                                    <div class="card-title detproduct ">Size : @item.size</div>
+
+                                    <p class="card-text desproduct"> @item.description</p>
+
+                                </div>
+
+                                <div class="card-footer custom-footer" style="padding:8px 6px">
+                                    <div class="float-start priceproduct">
+                                        <h2>$@item.price</h2>
+
+                                    </div>
+                                    <div class="float-end">
+                                        <a asp-action="ProductDetails" asp-controller="Home" asp-route-productid="@item.id" asp-route-cateid="@item.productCategory.id" class="btn btnwatch flex-shrink-0">Watch Now</a>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        }
+
+                    }
+
+                </div>
+
+            </div>
+
+            <div class="product" data-category="shoe" id="shoesection">
+                <h2 style="text-align:center;padding-bottom:5px;font-family: 'Work Sans', sans-serif;color:#dc143c">Shoe section</h2>
+                <div class="row row-cols-3 row-cols-md-3 g-4">
+
+                    @foreach (var item in Model)
+                    {
+
+                        if (item.productCategory.name == "shoe")
+                        {
+
+                            <div class="card h-100 shadow cardproduct   custum-card col-3 m-5 p-4">
+                                @foreach (var item2 in item.productImages)
+                                {
+
+                                    <img src="@($"data:image/png;base64,{Convert.ToBase64String(item2.img)}")" class="card-img-top img-fluid custum-bg" />
+                                    break;
+                                }
+                                <div class="card-body p-2">
+
+
+                                    <div class="card-title titleproduct">@item.name</div>
+                                    <div class="card-title brandproduct">Brand : @item.brand.name</div>
+                                    <div class="card-title detproduct">Color : @item.color</div>
+                                    <div class="card-title detproduct ">Size : @item.size</div>
+                                    <p class="card-text desproduct"> @item.description</p>
+
+                                </div>
+
+                                <div class="card-footer custom-footer" style="padding:8px 6px">
+                                    <div class="float-start priceproduct">
+                                        <h2>$@item.price</h2>
+
+                                    </div>
+                                    <div class="float-end">
+                                        <a asp-action="ProductDetails" asp-controller="Home" asp-route-productid="@item.id" asp-route-cateid="@item.productCategory.id" class="btn btnwatch flex-shrink-0">Watch Now</a>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        }
+
+                    }
+
+                </div>
+            </div>
+
+
+
+            <div class="product" data-category="dress" id="dresssection">
+                <h2 style="text-align:center;padding-bottom:5px;font-family: 'Work Sans', sans-serif;color:#dc143c">Dress section</h2>
+                <div class="row row-cols-3 row-cols-md-3 g-4">
+
+                    @foreach (var item in Model)
+
+                    {
+
+                        if (item.productCategory.name == "dress")
+                        {
+
+                            <div class="card h-100 shadow cardproduct   col-3 m-5 p-4">
+                                @foreach (var item2 in item.productImages)
+                                {
+
+                                    <img src="@($"data:image/png;base64,{Convert.ToBase64String(item2.img)}")" class="card-img-top img-fluid custum-bg" />
+                                    break;
+                                }
+                                <div class="card-body p-2">
+
+
+                                    <div class="card-title titleproduct">@item.name</div>
+                                    <div class="card-title brandproduct">Brand : @item.brand.name</div>
+                                    <div class="card-title detproduct">Color : @item.color</div>
+                                    <div class="card-title detproduct ">Size : @item.size</div>
+                                    <p class="card-text desproduct"> @item.description</p>
+
+                                </div>
+
+                                <div class="card-footer custom-footer" style="padding:8px 6px">
+                                    <div class="float-start priceproduct">
+                                        <h2>$@item.price</h2>
+
+                                    </div>
+                                    <div class="float-end">
+                                        <a asp-action="ProductDetails" asp-controller="Home" asp-route-productid="@item.id" asp-route-cateid="@item.productCategory.id" class="btn btnwatch flex-shrink-0">Watch Now</a>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        }
+
+                    }
+
+                </div>
+            </div>
+
+
+        </section>
+    </div>
+
+
+    @*price filter 100*@
+    <div class="container-fluid mt-5 p100" style="background-color:#dce2e2;padding:30px" hidden="hidden">
+        <h2 class="text-center" style="text-align:center;padding-bottom:5px;font-family: 'Work Sans', sans-serif;font-weight:700;font-size:32px;margin-top:50px;color:#212529"><span style="border-bottom:4px solid;border-color:crimson;padding:3px;color:#212529">Our</span>  Product</h2>
+
+
+        <div class="text-center mb-3" style="margin-top:50px">
+            <button class="btnpall btn btn-outline-dark flex-shrink-0 m-3" style="font-family: 'Work Sans', sans-serif;letter-spacing:1px;width:150px;">All Price</button>
+            <button class="btnp150 btn btn-outline-dark flex-shrink-0 m-3" style="font-family: 'Work Sans', sans-serif;letter-spacing:1px;width:150px;">Max $150</button>
+            <button class="btn btn btn-outline-dark flex-shrink-0 m-3" style="font-family: 'Work Sans', sans-serif;letter-spacing:1px;width:150px;" onclick="showAll()">All Category</button>
+            <button class="btn btn btn-outline-dark flex-shrink-0 m-3" style="font-family: 'Work Sans', sans-serif;letter-spacing:1px;width:150px;" onclick="showCategory('bag')">BAG</button>
+            <button class="btn btn btn-outline-dark flex-shrink-0 m-3" style="font-family: 'Work Sans', sans-serif;letter-spacing:1px;width:150px;" onclick="showCategory('dress')">DRESS</button>
+            <button class="btn btn btn-outline-dark flex-shrink-0 m-3" style="font-family: 'Work Sans', sans-serif;letter-spacing:1px;width:150px;" onclick="showCategory('shoe')">SHOE</button>
+        </div>
+
+
+        <section id="product" class="mt-5 ">
+
+
+            <div class=" product" data-category="bag">
+                <h2 style="text-align:center;padding-bottom:5px;font-family: 'Work Sans', sans-serif;color:#dc143c">Bag section</h2>
+
+                <div class="row  row-cols-4 g-4 ">
+
+                    @foreach (var item in Model)
+                    {
+
+
+                        if (item.productCategory.name == "bag" && item.price >= 0 && item.price <= 100)
+                        {
+
+                            <div class="card h-100 shadow  col-3 m-5 p-4 justify-content-evenly cardproduct">
+                                @foreach (var item2 in item.productImages)
+                                {
+
+                                    <img src="@($"data:image/png;base64,{Convert.ToBase64String(item2.img)}")" class="card-img-top img-fluid custum-bg" />
+                                    break;
+                                }
+                                <div class="card-body p-2">
+
+
+                                    <div class="card-title titleproduct">@item.name</div>
+                                    <div class="card-title brandproduct">Brand : @item.brand.name</div>
+                                    <div class="card-title detproduct">Color : @item.color</div>
+                                    <div class="card-title detproduct ">Size : @item.size</div>
+
+                                    <p class="card-text desproduct"> @item.description</p>
+
+                                </div>
+
+                                <div class="card-footer custom-footer" style="padding:8px 6px">
+                                    <div class="float-start priceproduct">
+                                        <h2>$@item.price</h2>
+
+                                    </div>
+                                    <div class="float-end">
+                                        <a asp-action="ProductDetails" asp-controller="Home" asp-route-productid="@item.id" asp-route-cateid="@item.productCategory.id" class="btn btnwatch flex-shrink-0">Watch Now</a>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        }
+
+                    }
+
+                </div>
+
+            </div>
+
+            <div class="product" data-category="shoe" data>
+                <h2 style="text-align:center;padding-bottom:5px;font-family: 'Work Sans', sans-serif;color:#dc143c">Shoe section</h2>
+                <div class="row row-cols-3 row-cols-md-3 g-4">
+
+                    @foreach (var item in Model)
+                    {
+
+                        if (item.productCategory.name == "shoe" && item.price >= 0 && item.price <= 100)
+                        {
+
+                            <div class="card h-100 shadow  col-3 m-5 p-4 cardproduct">
+                                @foreach (var item2 in item.productImages)
+                                {
+
+                                    <img src="@($"data:image/png;base64,{Convert.ToBase64String(item2.img)}")" class="card-img-top img-fluid custum-bg" />
+                                    break;
+                                }
+                                <div class="card-body p-2">
+
+
+                                    <div class="card-title titleproduct">@item.name</div>
+                                    <div class="card-title brandproduct">Brand : @item.brand.name</div>
+                                    <div class="card-title detproduct">Color : @item.color</div>
+                                    <div class="card-title detproduct ">Size : @item.size</div>
+                                    <p class="card-text desproduct"> @item.description</p>
+
+                                </div>
+
+                                <div class="card-footer custom-footer" style="padding:8px 6px">
+                                    <div class="float-start priceproduct">
+                                        <h2>$@item.price</h2>
+
+                                    </div>
+                                    <div class="float-end">
+                                        <a asp-action="ProductDetails" asp-controller="Home" asp-route-productid="@item.id" asp-route-cateid="@item.productCategory.id" class="btn btnwatch flex-shrink-0">Watch Now</a>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        }
+
+                    }
+
+                </div>
+            </div>
+
+
+
+            <div class="product" data-category="dress">
+                <h2 style="text-align:center;padding-bottom:5px;font-family: 'Work Sans', sans-serif;color:#dc143c">Dress section</h2>
+                <div class="row row-cols-3 row-cols-md-3 g-4">
+
+                    @foreach (var item in Model)
+
+                    {
+
+                        if (item.productCategory.name == "dress" && item.price >= 0 && item.price <= 100)
+                        {
+
+                            <div class="card h-100 shadow  col-3 m-5 p-4 cardproduct">
+                                @foreach (var item2 in item.productImages)
+                                {
+
+                                    <img src="@($"data:image/png;base64,{Convert.ToBase64String(item2.img)}")" class="card-img-top img-fluid custum-bg" />
+                                    break;
+                                }
+                                <div class="card-body p-2">
+
+
+                                    <div class="card-title titleproduct">@item.name</div>
+                                    <div class="card-title brandproduct">Brand : @item.brand.name</div>
+                                    <div class="card-title detproduct">Color : @item.color</div>
+                                    <div class="card-title detproduct ">Size : @item.size</div>
+                                    <p class="card-text desproduct"> @item.description</p>
+
+                                </div>
+
+                                <div class="card-footer custom-footer" style="padding:8px 6px">
+                                    <div class="float-start priceproduct">
+                                        <h2>$@item.price</h2>
+
+                                    </div>
+                                    <div class="float-end">
+                                        <a asp-action="ProductDetails" asp-controller="Home" asp-route-productid="@item.id" asp-route-cateid="@item.productCategory.id" class="btn btnwatch flex-shrink-0">Watch Now</a>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        }
+
+                    }
+
+                </div>
+            </div>
+
+
+
+        </section>
+
+
+
+    </div>
+
+
+    @*filter price 150*@
+    <div class="container-fluid mt-5 p150" style="background-color:#dce2e2;padding:30px" hidden="hidden">
+
+
+
+        <h2 class="text-center" style="text-align:center;padding-bottom:5px;font-family: 'Work Sans', sans-serif;font-weight:700;font-size:32px;margin-top:50px;color:#212529"><span style="border-bottom:4px solid;border-color:crimson;padding:3px;color:#212529">Our</span>  Product</h2>
+
+
+
+
+
+
+
+        <div class="text-center mb-3" style="margin-top:50px">
+            <button class="btnp100 btn btn-outline-dark flex-shrink-0 m-3" style="font-family: 'Work Sans', sans-serif;letter-spacing:1px;width:150px;">Max $100</button>
+            <button class="btnpall btn btn-outline-dark flex-shrink-0 m-3" style="font-family: 'Work Sans', sans-serif;letter-spacing:1px;width:150px;">All Price</button>
+            <button class="btn btn btn-outline-dark flex-shrink-0 m-3" style="font-family: 'Work Sans', sans-serif;letter-spacing:1px;width:150px;" onclick="showAll()">All Category</button>
+            <button class="btn btn btn-outline-dark flex-shrink-0 m-3" style="font-family: 'Work Sans', sans-serif;letter-spacing:1px;width:150px;" onclick="showCategory('bag')">BAG</button>
+            <button class="btn btn btn-outline-dark flex-shrink-0 m-3" style="font-family: 'Work Sans', sans-serif;letter-spacing:1px;width:150px;" onclick="showCategory('dress')">DRESS</button>
+            <button class="btn btn btn-outline-dark flex-shrink-0 m-3" style="font-family: 'Work Sans', sans-serif;letter-spacing:1px;width:150px;" onclick="showCategory('shoe')">SHOE</button>
+        </div>
+
+
+        <section id="product" class="mt-5 ">
+
+            <div class=" product" data-category="bag">
+                <h2 style="text-align:center;padding-bottom:5px;font-family: 'Work Sans', sans-serif;color:#dc143c">Bag section</h2>
+
+                <div class="row  row-cols-4 g-4 ">
+
+                    @foreach (var item in Model)
+                    {
+
+
+                        if (item.productCategory.name == "bag" && item.price >= 0 && item.price <= 150)
+                        {
+
+
+                            <div class="card h-100 shadow  col-3 m-5 p-4 justify-content-evenly cardproduct">
+                                @foreach (var item2 in item.productImages)
+                                {
+
+                                    <img src="@($"data:image/png;base64,{Convert.ToBase64String(item2.img)}")" class="card-img-top img-fluid custum-bg" />
+                                    break;
+                                }
+                                <div class="card-body p-2">
+
+
+                                    <div class="card-title title titleproduct">@item.name</div>
+                                    <div class="card-title brandproduct">Brand : @item.brand.name</div>
+
+                                    <div class="card-title detproduct">Color : @item.color</div>
+                                    <div class="card-title detproduct ">Size : @item.size</div>
+                                    <p class="card-text desproduct"> @item.description</p>
+
+                                </div>
+
+                                <div class="card-footer custom-footer" style="padding:8px 6px">
+                                    <div class="float-start priceproduct">
+                                        <h2>$@item.price</h2>
+
+                                    </div>
+                                    <div class="float-end">
+                                        <a asp-action="ProductDetails" asp-controller="Home" asp-route-productid="@item.id" asp-route-cateid="@item.productCategory.id" class="btn btnwatch flex-shrink-0">Watch Now</a>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        }
+
+                    }
+
+                </div>
+
+            </div>
+
+            <div class="product" data-category="shoe" data>
+                <h2 style="text-align:center;padding-bottom:5px;font-family: 'Work Sans', sans-serif;color:#dc143c">Shoe section</h2>
+                <div class="row row-cols-3 row-cols-md-3 g-4">
+
+                    @foreach (var item in Model)
+                    {
+
+                        if (item.productCategory.name == "shoe" && item.price >= 0 && item.price <= 150)
+                        {
+
+
+                            <div class="card h-100 shadow  col-3 m-5 p-4 cardproduct">
+                                @foreach (var item2 in item.productImages)
+                                {
+
+                                    <img src="@($"data:image/png;base64,{Convert.ToBase64String(item2.img)}")" class="card-img-top img-fluid custum-bg" />
+                                    break;
+                                }
+                                <div class="card-body p-2">
+
+
+                                    <div class="card-title titleproduct">@item.name</div>
+                                    <div class="card-title brandproduct">Brand : @item.brand.name</div>
+                                    <div class="card-title detproduct">Color : @item.color</div>
+                                    <div class="card-title detproduct ">Size : @item.size</div>
+                                    <p class="card-text desproduct"> @item.description</p>
+
+                                </div>
+
+                                <div class="card-footer custom-footer" style="padding:8px 6px">
+                                    <div class="float-start priceproduct">
+                                        <h2>$@item.price</h2>
+
+                                    </div>
+                                    <div class="float-end">
+                                        <a asp-action="ProductDetails" asp-controller="Home" asp-route-productid="@item.id" asp-route-cateid="@item.productCategory.id" class="btn btnwatch flex-shrink-0">Watch Now</a>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        }
+
+                    }
+
+                </div>
+            </div>
+
+
+
+            <div class="product" data-category="dress">
+                <h2 style="text-align:center;padding-bottom:5px;font-family: 'Work Sans', sans-serif;color:#dc143c">Dress section</h2>
+                <div class="row row-cols-3 row-cols-md-3 g-4">
+
+                    @foreach (var item in Model)
+
+                    {
+
+                        if (item.productCategory.name == "dress" && item.price >= 0 && item.price <= 150)
+                        {
+
+                            <div class="card h-100 shadow  col-3 m-5 p-4 cardproduct">
+                                @foreach (var item2 in item.productImages)
+                                {
+
+                                    <img src="@($"data:image/png;base64,{Convert.ToBase64String(item2.img)}")" class="card-img-top img-fluid custum-bg" />
+                                    break;
+                                }
+                                <div class="card-body p-2 ">
+
+
+                                    <div class="card-title titleproduct">@item.name</div>
+                                    <div class="card-title brandproduct">Brand : @item.brand.name</div>
+                                    <div class="card-title detproduct">Color : @item.color</div>
+                                    <div class="card-title detproduct ">Size : @item.size</div>
+                                    <p class="card-text desproduct"> @item.description</p>
+
+                                </div>
+
+                                <div class="card-footer custom-footer" style="padding:8px 6px">
+                                    <div class="float-start priceproduct">
+                                        <h2>$@item.price</h2>
+
+                                    </div>
+                                    <div class="float-end">
+                                        <a asp-action="ProductDetails" asp-controller="Home" asp-route-productid="@item.id" asp-route-cateid="@item.productCategory.id" class="btn btnwatch flex-shrink-0">Watch Now</a>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        }
+
+                    }
+
+                </div>
+            </div>
+
+        </section>
+
+
+
+    </div>
+    <div id="productContainer" class="row row-cols-3 row-cols-md-3 g-4" style="padding:30px"></div>
+    <script>
+        function showAll() {
+            $(".product").removeClass("d-none").addClass("d-block");
+        }
+
+        function showCategory(category) {
+            $(".product").each(function () {
+                if ($(this).data("category") === category) {
+                    $(this).removeClass("d-none").addClass("d-block");
+                } else {
+                    $(this).removeClass("d-block").addClass("d-none");
+                }
+            });
+        }
+
+
+     
+
+
+        window.addEventListener("load", () => {
+            const loader = document.querySelector(".loader");
+            loader.classList.add("loader--hidden");
+            loader.addEventListener("transitionend", () => {
+                loader.remove();
+            });
+        });
+
+
+
+
+        $(function () {
+            $(".btnp100").click(function () {
+                $(".pall").attr("hidden", "hidden");
+                $(".p100").attr("hidden", false);
+                $(".p150").attr("hidden", "hidden")
+            });
+            $(".btnpall").click(function () {
+                $(".pall").attr("hidden", false);
+                $(".p100").attr("hidden", "hidden");
+                $(".p150").attr("hidden", "hidden");
+
+            });
+            $(".btnp150").click(function () {
+                $(".pall").attr("hidden", true);
+                $(".p100").attr("hidden", "hidden");
+                $(".p150").attr("hidden", false);
+
+            });
+
+
+            let userId = $("#inpuid").val();
+            $.post("/Home/GetProductShoppedAndLiked", { userId: userId }, function (products) {
+                console.log(products)
+                if (userId != null) {
+                    let pdoducthead = `<h2 class="text-center s col-6 offset-3" style="text-align:center;padding-bottom:5px;font-family: 'Work Sans', sans-serif;font-weight:700;font-size:32px;margin-top:30px;color:#212529"><span style="border-bottom:4px solid;border-color:crimson;padding:3px;color:#212529">Our</span>  Offer</h2>`
+                    $("#productContainer").append(pdoducthead);
+                }
+                $.each(products, function (index, product) {
+                    console.log(product.images[0].productid)
+                    console.log(product.name)
+
+                    let productCard = `
+
+                                                                    <div class="card h-100 shadow col-3 m-5 p-4 justify-content-evenly cardproduct">
+                                                                                <img src="data:image/png;base64,${product.images[0].img}"  class="card-img-top img-fluid custum-bg" alt="${product.name}">
+                                                                <div class="card-body p-2">
+                                                                                     <div class="card-title titleproduct">${product.name}</div>
+                                                                                                      <div class="card-title brandproduct">Brand : ${product.brand}</div>
+                                                 <div class="card-title detproduct">Color : ${product.color}</div>
+                                                                                    <div class="card-title detproduct ">Size : ${product.size}</div>
+                                                                                    <p class="card-text desproduct"> ${product.description}</p>
+
+
+                                         <div class="card-footer custom-footer" style="padding:8px 6px">
+                                                                            <div class="float-start priceproduct">
+                                                                                        <h2>$${product.price}</h2>
+
+                                                                            </div>
+
+
+                                                                                     <div class="float-end">
+                                                                                                <a  class="btn btnwatch flex-shrink-0">Watch Now</a>
+
+                                                                            </div>
+
+
+                                                                </div>
+                                                            </div>
+
+                                                    `;
+
+
+                    $("#productContainer").append(productCard);
+                });
+            });
+        });
+
+
+
+        $(".cardbody").each(function (i) {
+            var card = $(this);
+            setTimeout(function () {
+                card.addClass("p");
+            }, i * 600);
+        });
+    </script>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

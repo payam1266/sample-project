@@ -1,0 +1,486 @@
+﻿@{
+    ViewData["Title"] = "Users";
+    Layout = "~/Views/Shared/_actionadminlayout.cshtml";
+}
+
+<link href="~/css/home.css" rel="stylesheet" />
+<link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+<link href="~/css/admin.css" rel="stylesheet" />
+
+@inject UserManager<ApplicationUser> usermansger
+
+@if (User.Identity.IsAuthenticated)
+{
+    ApplicationUser user = await usermansger.FindByEmailAsync(User.Identity.Name);
+
+
+    <input id="adminid" value="@user.Id" hidden="hidden" />
+
+
+
+}
+
+<script src="~/lib/jquery/dist/jquery.js"></script>
+@model UserViewModel
+<div class="container-fluid px-4">
+    <div class="row g-3 my-2">
+        <div class="col-md-3">
+            <div class="p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded">
+                <div>
+                    <div id="cityCount">
+                        <h3 id="countNumber" class="fs-2">0</h3>
+
+                    </div>
+                    <p class="fs-5">Count Of All Users</p>
+                    <button class="btn btn-outline-dark   shadow" style="border-radius:5px;font-size:12px;letter-spacing:2px;font-weight:700" id="showAllBtn">All Users</button>
+                </div>
+                <i class="fas fa-gift fs-1 primary-text border rounded-full secondary-bg p-3"></i>
+            </div>
+        </div>
+
+
+
+        <div class="col-md-3">
+            <div class="p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded">
+                <div>
+                    <div id="cityCount">
+                        <h3 id="sellersCount" class="fs-2">0</h3>
+
+                    </div>
+                    <p class="fs-5">Count Of Sellers</p>
+                    <button class="btn btn-outline-dark   shadow" style="border-radius:5px;font-size:12px;letter-spacing:2px;font-weight:700" id="showSellersButton">Just Sellers</button>
+
+                </div>
+                <i class="fas fa-gift fs-1 primary-text border rounded-full secondary-bg p-3"></i>
+            </div>
+        </div>
+
+
+
+        <div class="col-md-3">
+            <div class="p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded">
+                <div>
+                    <div id="cityCount">
+                        <h3 id="deliverCount" class="fs-2">0</h3>
+
+                    </div>
+                    <p class="fs-5">Count Of Delivers</p>
+                    <button class="btn btn-outline-dark   shadow" style="border-radius:5px;font-size:12px;letter-spacing:2px;font-weight:700" id="showDeliverButton">Just Delivers</button>
+                </div>
+                <i class="fas fa-gift fs-1 primary-text border rounded-full secondary-bg p-3"></i>
+            </div>
+
+        </div>
+
+        <div class="col-md-3">
+            <div class="p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded">
+                <div>
+                    <div id="cityCount">
+                        <h3 id="customerCount" class="fs-2">0</h3>
+
+                    </div>
+                    <p class="fs-5">Count Of Customer</p>
+                    <button class="btn btn-outline-dark    shadow" style="border-radius:5px;font-size:12px;letter-spacing:2px;font-weight:700" id="showCustomerBtn">Just Customers</button>
+                </div>
+                <i class="fas fa-gift fs-1 primary-text border rounded-full secondary-bg p-3"></i>
+            </div>
+
+        </div>
+
+        <div class="col-md-3">
+            <div class="p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded">
+                <div>
+                    <div id="cityCount">
+                        <h3 id="admincount" class="fs-2">0</h3>
+
+                    </div>
+                    <p class="fs-5">Count Of Admins</p>
+                    <button class="btn btn-outline-dark   shadow" style="font-weight:700;border-radius:5px;font-size:12px;letter-spacing:2px" id="showadminbtn">Just Admins</button>
+                </div>
+                <i class="fas fa-gift fs-1 primary-text border rounded-full secondary-bg p-3"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row my-5">
+    <div id="formcityinsert">
+
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 offset-lg-3">
+                    <div class="insert-menu">
+
+
+                        <div class="form-group">
+                            <h2 id="hinsert" style="font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif">Edit User</h2>
+                            <h2 id="hupdate" hidden="hidden" style="font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif">Update User</h2>
+                            <div class="form-group">
+                                <input type="text" contenteditable="true" id="name" class="form-control" placeholder="First NAME" asp-for="name" autocomplete="off">
+                            </div>
+                            <div class="form-group">
+                                <input type="text" contenteditable="true" id="family" class="form-control" placeholder="Last Name" asp-for="family" autocomplete="off">
+                            </div>
+                            <div class="form-group">
+                                <input type="text" contenteditable="true" id="email" class="form-control" placeholder="NAME" asp-for="email" autocomplete="off">
+                            </div>
+                            <div class="form-group">
+                                <input type="tel" contenteditable="true" id="phone" class="form-control" placeholder="Phone" asp-for="phone" autocomplete="off">
+                            </div>
+                            <div class="form-group">
+                                <input type="number" contenteditable="true" id="age" class="form-control" placeholder="Age" asp-for="age" autocomplete="off">
+                            </div>
+                            <div class="form-group">
+                                <input type="text" contenteditable="true" id="city" class="form-control" placeholder="Ciry" asp-for="city" autocomplete="off">
+                            </div>
+                            <div class="form-group">
+
+                                <select id="roleId" class="form-select text-black-50" asp-for="roleId">
+                                    <option>select your role</option>
+
+                                    @{
+                                        foreach (var item in ViewData["Roles"] as List<IdentityRole>)
+                                        {
+                                            <option value="@item.Id"> @item.Name</option>
+
+
+                                        }
+                                    }
+                                </select>
+                            </div><br />
+                        </div>
+                        <div>
+
+                            <button id="btnUpdate" class="btn btn-dark btn-lg shadow" style="border-radius:5px;font-size:12px;letter-spacing:2px">Update</button>
+                            <button id="btnAddRole" class="btn btn-dark btn-lg shadow float-end" style="border-radius:5px;font-size:12px;letter-spacing:2px;">Add Roll</button>
+                            <input hidden="hidden" id="input1" />
+                            <input hidden="hidden" id="input2" />
+                            <input hidden="hidden" id="input3" />
+                            <span id="spancityinsert" hidden="hidden" style="margin:100px;color:lightseagreen">Insert Successful  <img src="~/picture/done_all_fill1_wght400_grad0_opsz24.svg" /></span>
+                            <span id="spancityupdate" hidden="hidden" style="margin:100px;color:lightseagreen">Update Successful  <img src="~/picture/done_all_fill1_wght400_grad0_opsz24.svg" /></span>
+                            <span id="spancitydellet" hidden="hidden" style="margin:100px;color:lightseagreen">Delete Successful  <img src="~/picture/done_all_fill1_wght400_grad0_opsz24.svg" /></span>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<h3 class="fs-4 mb-3 text-center" style="font-family:'Times New Roman', Times, serif;letter-spacing:2px;margin-top:50px" a>List Of Users</h3>
+<div class="container" id="divselect">
+
+    <table contenteditable="false" class="table bg-light   " id="tbl" style="border-radius:20px">
+    </table>
+</div>
+
+
+<script>
+    $(function () {
+        Select()
+    })
+    let i = 1
+    let tbl = $("#tbl")
+    function Select() {
+        $("#tbl").html(null)
+
+        let sellersCount = 0;
+        let customerCount = 0;
+        let deliverCount = 0;
+        let admincount = 0;
+
+        $.post("/Admin/ListOfUsers", function (value) {
+            let th = `<thead  class=" text-light" style="background-color:#9C27B0"> <tr ><th>#</th><th>First Name</th><th>Last Name</th><th>Email</th><th>Phone</th><th>Age</th><th>City</th><th>Role</th><th>Delete</th><th>Edit</th><<tr></thead>`
+            tbl.append(th)
+            let tbody = "<tbody></tbody>"
+
+            tbl.append(tbody)
+            $("#countNumber").text(value.length);
+            let id;
+
+            value.forEach((user, index) => {
+
+                let adid;
+
+
+                if ($("#adminid").val() != user.id) {
+
+                    let tr = `<tr><td>${i}</td>
+                                                                                            <td>${user.name}</td>
+                                                                                            <td>${user.family}</td>
+                                                                                            <td>${user.email}</td>
+                                                                                                <td>${user.phone}</td>
+                                                                                                <td>${user.age}</td>
+                                                                                                    <td>${user.city}</td>
+
+                                                                                                    < <td>${user.rolename}</td>
+
+
+
+                                                                                                                  <td><button class="btn btn-outline-danger" style="width:125px;font-size:12px" onclick="F1('${user.id}')">Delete</button></td>
+
+                                                                                                                  <td><button class="btn btn-outline-primary" style="width:125px;font-size:12px" onclick="F2('${user.id}')">Edit</button></td>
+
+                                                                                       </tr>`
+                    tbl.append(tr)
+                    i++
+                    if (user.rolename === "Sellers") {
+                        sellersCount++;
+                    }
+                    if (user.rolename === "Customers") {
+                        customerCount++;
+                    }
+                    if (user.rolename === "Delivers") {
+                        deliverCount++;
+                    }
+                    if (user.rolename === "Admins") {
+                        admincount++;
+                    }
+                }
+
+
+            })
+
+            $("#sellersCount").text(sellersCount);
+            $("#customerCount").text(customerCount);
+            $("#deliverCount").text(deliverCount);
+            $("#admincount").text(admincount);
+        })
+
+    }
+
+    function F1(id) {
+
+
+
+        $.post("/Admin/DeleteUser", { id: id }, function (value) {
+            Select();
+        })
+    }
+    let productId;
+    function F2(id) {
+
+        productId = id;
+
+
+        $.post("/Admin/EditUsers", { id: id }, function (value) {
+            value.forEach((user, index) => {
+
+
+                $("#input2").val(user.rolename)
+
+                $("#name").val(user.name)
+                $("#family").val(user.family)
+                $("#email").val(user.email)
+                $("#phone").val(user.phone)
+                $("#age").val(user.age)
+                $("#city").val(user.city)
+
+                $("#roleId").prop("selectedIndex", user.roleId)
+                let selectrole = $("#roleId")
+                selectrole.change(function () {
+                    let roleid = $('#roleId').val()
+                    $('#input3').val(roleid)
+
+
+
+
+                })
+            })
+
+
+        })
+
+    }
+
+    $("#btnUpdate").click(function () {
+        $.post("/Admin/UpdateUser", {
+            id: productId, name: $("#name").val(), family: $("#family").val(), email: $("#email").val(), age: $("#age").val(), city: $("#city").val(), phone: $("#phone").val(), roleId: $("#input3").val(), rolename: $("#input2").val()
+        }, function (value) {
+            $('#btnUpdate').val(null)
+            $('#name').val(null)
+            $('#family').val(null)
+            $("#phone").val(null)
+            $("#age").val(null)
+            $("#city").val(null)
+            $("#email").val(null)
+            $('#roleId').val(null)
+
+            $('#input2').val(null)
+            $('#input3').val(null)
+            alert(value)
+            Select();
+        })
+
+    })
+    $("#btnAddRole").click(function () {
+        $.post("/Admin/AddRoleToUser", {
+            id: productId, name: $("#name").val(), family: $("#family").val(), email: $("#email").val(), roleId: $("#input3").val(), rolename: $("#input2").val()
+        }, function (value) {
+            $('#btnUpdate').val(null)
+            $('#name').val(null)
+            $('#family').val(null)
+            $("#phone").val(null)
+            $("#age").val(null)
+            $("#city").val(null)
+            $("#email").val(null)
+            $('#roleId').val(null)
+
+            $('#input2').val(null)
+            $('#input3').val(null)
+            alert(value)
+            Select();
+        })
+
+    })
+
+    $("#showSellersButton").click(function () {
+
+        $.post("/Admin/ListOfSellers", function (value) {
+
+            $("#tbl tbody").html("");
+
+
+
+
+
+            $.each(value, function (index, seller) {
+                if ($("#adminid").val() != seller.id) {
+
+                    let row = `
+                                <tr>
+                                    <td>${index + 1}</td>
+                                    <td>${seller.name}</td>
+                                    <td>${seller.family}</td>
+                                    <td>${seller.email}</td>
+                                    <td>${seller.phone}</td>
+                                    <td>${seller.age}</td>
+                                    <td>${seller.city}</td>
+                                    <td>${seller.rolename}</td>
+
+                                        <td><button class="btn btn-outline-danger" style="width:125px;font-size:12px" onclick="F1('${seller.id}')">Delete</button></td>
+                                        <td><button class="btn btn-outline-primary" style="width:125px;font-size:12px" onclick="F2('${seller.id}')">Edite</button></td>
+                                </tr>
+                            `;
+                    $("#tbl tbody").append(row);
+                }
+            });
+        });
+    });
+    $("#showDeliverButton").click(function () {
+
+        $.post("/Admin/ListOfDelivers", function (value) {
+
+
+            $("#tbl tbody").html("");
+
+
+
+
+
+            $.each(value, function (index, deliver) {
+                if ($("#adminid").val() != deliver.id) {
+
+                    let row = `
+                                <tr>
+                                    <td>${index + 1}</td>
+                                        <td>${deliver.name}</td>
+                                        <td>${deliver.family}</td>
+                                        <td>${deliver.email}</td>
+                                        <td>${deliver.phone}</td>
+                                        <td>${deliver.age}</td>
+                                        <td>${deliver.city}</td>
+                                        <td>${deliver.rolename}</td>
+
+
+                                                <td><button class="btn btn-outline-danger" style="width:125px;font-size:12px" onclick="F1('${deliver.id}')">Delete</button></td>
+                                                <td><button class="btn btn-outline-primary" style="width:125px;font-size:12px" onclick="F2('${deliver.id}')">Edit</button></td>
+                                </tr>
+                            `;
+                    $("#tbl tbody").append(row);
+                }
+            });
+        });
+    });
+    $("#showCustomerBtn").click(function () {
+
+        $.post("/Admin/ListOfCustomers", function (value) {
+
+
+            $("#tbl tbody").html("");
+
+
+
+
+
+            $.each(value, function (index, customer) {
+                if ($("#adminid").val() != customer.id) {
+
+                    let row = `
+                                <tr>
+                                    <td>${index + 1}</td>
+                                            <td>${customer.name}</td>
+                                            <td>${customer.family}</td>
+                                            <td>${customer.email}</td>
+                                            <td>${customer.phone}</td>
+                                            <td>${customer.age}</td>
+                                            <td>${customer.city}</td>
+                                            <td>${customer.rolename}</td>
+
+                                                    <td><button class="btn btn-outline-danger" style="width:125px;font-size:12px" onclick="F1('${customer.id}')">Delete</button></td>
+                                                    <td><button class="btn btn-outline-primary" style="width:125px;font-size:12px" onclick="F2('${customer.id}')">Edit</button></td>
+                                </tr>
+                            `;
+                    $("#tbl tbody").append(row);
+                }
+            });
+        });
+    });
+
+    $("#showadminbtn").click(function () {
+
+        $.post("/Admin/ListOfAdmins", function (value) {
+
+
+            $("#tbl tbody").html("");
+
+
+
+
+
+            $.each(value, function (index, admin) {
+                if ($("#adminid").val() != admin.id) {
+
+                    let row = `
+                                <tr>
+                                    <td>${index + 1}</td>
+                                            <td>${admin.name}</td>
+                                            <td>${admin.family}</td>
+                                            <td>${admin.email}</td>
+                                            <td>${admin.phone}</td>
+                                            <td>${admin.age}</td>
+                                            <td>${admin.city}</td>
+                                            <td>${admin.rolename}</td>
+
+                                                        <td><button class="btn btn-outline-danger"style="width:125px;font-size:12px" onclick="F1('${admin.id}')">Delete</button></td>
+                                                        <td><button class="btn btn-outline-primary" style="width:125px;font-size:12px" onclick="F2('${admin.id}')">Edit</button></td>
+                                </tr>
+                            `;
+                    $("#tbl tbody").append(row);
+                }
+            });
+        });
+    });
+
+
+    $("#showAllBtn").click(function () {
+        Select();
+    });
+
+
+
+</script>
+

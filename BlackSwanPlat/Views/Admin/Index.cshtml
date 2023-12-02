@@ -1,0 +1,423 @@
+﻿@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<script src="~/js/site.js"></script>
+<link href="~/css/admin.css" rel="stylesheet" />
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=PT+Sans&family=Philosopher:wght@700&family=Poppins:wght@400;500&family=Work+Sans&display=swap" rel="stylesheet">
+
+
+
+<style>
+    p {
+        color: #607D8B;
+        font-family: 'Poppins', sans-serif;
+    }
+
+    .data {
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+        margin: 12px;
+    }
+</style>
+<div class="d-flex" id="wrapper">
+
+    <div class="bg-white" id="sidebar-wrapper">
+        <div class="sidebar-heading text-center  py-4 primary-text fs-4 fw-bold text-uppercase border-bottom" style="color:black;">
+            BlackSwan
+        </div>
+        <div class="list-group list-group-flush my-3">
+            <a href="#" class="list-group-item list-group-item-action bg-transparent second-text active">
+                Dashboard
+            </a>
+            <a href="#" class="list-group-item list-group-item-action bg-transparent second-text fw-bold">
+                <i class="fas fa-project-diagram me-2"></i>Projects
+            </a>
+            <a href="#" class="list-group-item list-group-item-action bg-transparent second-text fw-bold">
+                <i class="fas fa-chart-line me-2"></i>Analytics
+            </a>
+            <a href="#" class="list-group-item list-group-item-action bg-transparent second-text fw-bold">
+                <i class="fas fa-paperclip me-2"></i>Reports
+            </a>
+            <a href="#" class="list-group-item list-group-item-action bg-transparent second-text fw-bold">
+                <i class="fas fa-shopping-cart me-2"></i>Store Mng
+            </a>
+            <a href="#" class="list-group-item list-group-item-action bg-transparent second-text fw-bold">
+                <i class="fas fa-gift me-2"></i>Products
+            </a>
+            <a href="#" class="list-group-item list-group-item-action bg-transparent second-text fw-bold">
+                <i class="fas fa-comment-dots me-2"></i>Chat
+            </a>
+            <a href="#" class="list-group-item list-group-item-action bg-transparent second-text fw-bold">
+                <i class="fas fa-map-marker-alt me-2"></i>Outlet
+            </a>
+            <a href="#" class="list-group-item list-group-item-action bg-transparent text-danger fw-bold">
+                <i class="fas fa-power-off me-2"></i>Logout
+            </a>
+        </div>
+    </div>
+
+    <div id="page-content-wrapper">
+        <nav class="navbar navbar-expand-lg navbar-light bg-transparent py-4 px-4">
+            <div class="d-flex align-items-center">
+                <i class="fas fa-align-left primary-text fs-4 me-3" id="menu-toggle"></i>
+                <h2 class="fs-2 m-0 border-5" style="color:#314152">Dashboard</h2>
+            </div>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle second-text fw-bold" href="#" id="navbarDropdown"
+                           role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fas fa-user me-2"></i>Admin
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="#">Profile</a></li>
+                            <li><a class="dropdown-item" href="#">Settings</a></li>
+                            <li><a id="todo" class="dropdown-item" href="#">ToDolist</a></li>
+                            <li><a class="dropdown-item" href="#">Logout</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <div class="container-fluid px-4" style="background-color:azure">
+            <div class="row g-3 my-2">
+
+                <div class="container-fluid px-4 ">
+                    <div class="row g-3 my-2 d-flex ">
+                        <div class="col-md-3 data ">
+                            <div class="p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded">
+                                <div>
+                                    <div>
+                                        <h3 id="Avesaleweek" style="color:#6610f2" class="fs-2">0</h3>
+
+
+                                    </div>
+
+                                    <p class="fs-5">Average Sales Last Week</p>
+
+                                </div>
+                                <i class="fas fa-hand-holding-usd fs-1 primary-text border rounded-full secondary-bg p-3"></i>
+                            </div>
+                        </div>
+
+
+
+                        <div class="col-md-3 data">
+                            <div class="p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded">
+                                <div>
+                                    <div>
+                                        <h3 id="Avesalemonth" style="color:#FF5722" class="fs-2">0</h3>
+
+                                    </div>
+
+                                    <p class="fs-5">Average Sales Last Month</p>
+
+                                </div>
+                                <i class="fas fa-hand-holding-usd fs-1 primary-text border rounded-full secondary-bg p-3"></i>
+                            </div>
+                        </div>
+
+
+
+                        <div class="col-md-3 data">
+                            <div class="p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded">
+                                <div>
+                                    <div>
+                                        <h3 id="Aveprdlstw" style="color:#009688" class="fs-2">0</h3>
+                                    </div>
+
+                                    <p class="fs-5">Average Product Sales Last Week</p>
+
+                                </div>
+                                <i class="fas fa-hand-holding-usd fs-1 primary-text border rounded-full secondary-bg p-3"></i>
+                            </div>
+                        </div>
+
+
+                        <div class="col-md-3 data">
+                            <div class="p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded">
+                                <div>
+                                    <div>
+                                        <h3 id="avesalelstwperday" style="color:#d63384" class="fs-2">0</h3>
+
+                                    </div>
+
+                                    <p class="fs-5">Average Daily Sales Last Week</p>
+                                    <button class="btn btn-outline-dark    shadow " id="btnrecord" style="border-radius:5px;font-size:12px;letter-spacing:2px;font-family: 'Work Sans' , sans-serif ;font-weight:600;width:200px;height:35px">Record </button>
+                                </div>
+                                <i class="fas fa-hand-holding-usd fs-1 primary-text border rounded-full secondary-bg p-3"></i>
+                            </div>
+                        </div>
+
+
+                        <div class="col-md-3 data">
+                            <div class="p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded">
+                                <div>
+                                    <div class="d-flex">
+                                        <h3 id="Incweeksale" style="color:#0d6efd" class="fs-2">0</h3><h3>%</h3>
+
+                                    </div>
+
+                                    <p class="fs-5">Increase Weekly Sale</p>
+
+                                </div>
+                                <i class="fas fa-chart-line fs-1 primary-text border rounded-full secondary-bg p-3"></i>
+                            </div>
+                        </div>
+
+
+
+                        <div class="col-md-3 data">
+                            <div class="p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded">
+                                <div>
+                                    <div class="d-flex">
+                                        <input class="form-control small" type="number" id="tnum" value="3" /></h3>
+
+
+                                    </div>
+
+                                    <p class="fs-5">Top Product Last Week</p>
+                                    <button class="btn btn-outline-dark    shadow " id="btntopprolastweek" style="border-radius:5px;font-size:12px;letter-spacing:2px;font-family: 'Work Sans' , sans-serif ;font-weight:600;width:200px;height:35px">Top Product </button>
+                                </div>
+                                <i class="fas fa-chart-line fs-1 primary-text border rounded-full secondary-bg p-3"></i>
+                            </div>
+                        </div>
+
+
+
+
+                    </div>
+                </div>
+
+                <div class="container text-center" id="div2">
+                    <button id="btnclose3" class="btn-close " style="display:none;margin-bottom:20px"></button>
+                    <table class="table table-striped text-dark bg-light shadow table-hover  " id="tbl2">
+                    </table>
+
+                </div>
+
+
+                <section id="sectodo" style="background-color:lightcyan;display:none">
+                    <button id="btnclose4" class="btn-close " style="margin-bottom:20px"></button>
+                    <div class="container py-2 h-100">
+
+                        <div class="card rounded-3">
+                            <div class="card-body p-4">
+
+                                <p class="mb-2">
+                                    <span class="h2 me-2 text-danger">To Do List</span>
+                                </p>
+                                <p id="pdate" class=" pb-2"></p>
+
+                                <ul id="todolist" class="list-group rounded-0 "style="font-size:18px">
+                                   
+
+                                    <li hidden="hidden" id="productchekli" class="list-group-item border-0 d-flex align-items-center ps-0">
+                                        <input hidden="hidden" id="inpproductchekli" class="form-check-input me-3" type="checkbox" value="" />
+                                        <h5 id="pcountw" style="margin-bottom:0px"></h5>
+                                    </li> 
+
+                                    <li hidden="hidden" id="checkCanceled" class="list-group-item border-0 d-flex align-items-center ps-0">
+                                        <input hidden="hidden" id="inpCheckCanceled" class="form-check-input me-3" type="checkbox" value=""  />
+                                        <h5 id="hCheckcanceled" style="margin-bottom:0px"></h5>
+                                    </li> 
+                                    
+                                    
+                                    <li hidden="hidden" id="checkInventory" class="list-group-item border-0 d-flex align-items-center ps-0">
+                                        <input hidden="hidden" id="inpcheckInventory" class="form-check-input me-3" type="checkbox" value="" />
+                                        <h5 id="hcheckInventory" style="margin-bottom:0px"></h5>
+                                       
+                                    </li>
+                                </ul>
+
+
+                            </div>
+                        </div>
+
+                    </div>
+                </section>
+
+
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+
+<script>
+
+    function Avesaleweek() {
+        $.post("/Admin/AverageSalesLastWeek", function (value) {
+            $("#Avesaleweek").text(value.toFixed(2));
+        })
+    }
+    function Avesalemonth() {
+        $.post("/Admin/AverageSalesLastMonth", function (value) {
+            $("#Avesalemonth").text(value.toFixed(2));
+        })
+    }
+
+
+
+    function Gettotalpr() {
+        $.post("/Admin/GetTotalProduct", function (value) {
+
+            if (value < 2000) {
+                $("#productchekli").show();
+                $("#inpproductchekli").attr("hidden", false);
+                $("#pcountw").text("Increase Product Inventory");
+            }
+
+        })
+    }
+
+    function Avepnumsalelstw() {
+        $.post("/Admin/AveSaleProductLastWeek", function (value) {
+
+            $("#Aveprdlstw").text(value.toFixed(2));
+        })
+
+    }
+
+    function Avedailysalelstw() {
+        $.post("/Admin/AverageSalesLastWeekPerDay", function (value) {
+
+            $("#avesalelstwperday").text(value.toFixed(2));
+        })
+
+    }
+
+
+    $("#btnclose4").click(function () {
+
+        $("#sectodo").fadeOut(500);
+    })
+
+
+    $("#btnrecord").click(function () {
+        $.post("/Admin/RecordWeeklySale", function (value) {
+            alert(value);
+            ChangWeeklySale();
+        });
+    });
+
+    function ChangWeeklySale() {
+        $.post("/Admin/IncreaseWeeklySale", function (value) {
+
+            $("#Incweeksale").text(value.toFixed(1));
+        })
+
+    }
+
+
+
+
+    let k = 1
+    let tbl2 = $("#tbl2")
+    $("#btntopprolastweek").click(function () {
+        $("#div2").fadeIn(700);
+        $("#tbl2").html(null);
+        $("#btnclose3").fadeIn(700);
+        $.post("/Admin/TopProductSaleLastWeek", { num: $("#tnum").val() }, function (value) {
+            console.log(value)
+            let th2 = `<thead class="  text-light"style='background-color:#009688'><tr><th>#</th><th>Name</th><th>Price</th><th>Product Inventory</th><th>Total Sale</th><tr></thead>`
+            tbl2.append(th2)
+            let tbody2 = "<tbody></tbody>"
+
+            tbl2.append(tbody2)
+
+            value.forEach((p, index) => {
+
+
+                let tr2 = `<tr><td>${k}</td>
+
+                                                                    <td>${p.product.name}</td>
+                                                         <td>${p.product.price}</td>
+                                                            <td>${p.product.count}</td>
+                                                                            <td>${p.totalQuantity}</td>
+
+
+
+
+                                                                       </tr>`
+                tbl2.append(tr2)
+                k++
+
+            })
+
+        });
+    })
+
+
+    $("#btnclose3").click(function () {
+        $("#div2").fadeOut(500);
+
+    })
+
+    function checkCanceledOrder() {
+        $.post("/Admin/CheckCanceledOrder", function (value) {
+
+            if (value==="1") {
+                $("#checkCanceled").show();
+                $("#inpCheckCanceled").attr("hidden", false);
+                $("#hCheckcanceled").text("Handle The Canceled Orders.");
+            }
+
+        })
+    }
+
+
+    function checkLowInventory() {
+        $.post("/Admin/CheckLowInventory", function (value) {
+            console.log(value)
+            if (value.length > 0) {
+               
+                $("#checkInventory").show();
+                $("#inpcheckInventory").attr("hidden", false);
+                $("#hcheckInventory").text("Handle The Following Low Inventory Items:");
+
+
+                let lst = $("#checkInventory");
+                value.forEach((p, index) => {
+                    let name = $("<p class='p-1 m-1 text-primary'></p>").text(p);
+                    lst.append(name);
+                });
+               
+              
+            }
+        })
+    }
+
+
+    $(function () {
+
+        $("#todo").click(function () {
+            $("#sectodo").fadeIn(700);
+        });
+        $("#pdate").text(Date);
+
+
+        checkLowInventory();
+        checkCanceledOrder();
+        Gettotalpr();
+        Avesalemonth();
+        Avesaleweek();
+        Avepnumsalelstw();
+        Avedailysalelstw();
+        ChangWeeklySale();
+
+    })
+</script>

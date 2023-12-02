@@ -1,0 +1,164 @@
+﻿@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_actionadminlayout.cshtml";
+}
+<link href="~/css/home.css" rel="stylesheet" />
+<link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+<link href="~/css/admin.css" rel="stylesheet" />
+
+<script src="~/lib/jquery/dist/jquery.js"></script>
+@model ProductViewModel
+<div class="row my-5">
+    <div id="formcityinsert">
+        <form asp-action="Update" asp-controller="Admin" asp-route-id="@Model.id" enctype="multipart/form-data" method="post">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6 offset-lg-3">
+                        <div class="insert-menu">
+
+
+                            <div class="form-group">
+                                <h2 id="hinsert" style="font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif">Edite Product</h2>
+                                <h2 id="hupdate" hidden="hidden" style="font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif">Update Brand</h2>
+                            </div>
+
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="NAME" asp-for="name" autocomplete="" required>
+                            </div>
+
+                            <div class="form-group">
+                                <input type="number" class="form-control" placeholder="Count" asp-for="count" autocomplete="" required>
+                            </div>
+                            <div class="form-group">
+                                <input type="number" class="form-control" placeholder="Price" asp-for="price" autocomplete="" required>
+                            </div>
+                            <div class="form-group">
+                                <input type="datetime-local" class="form-control" placeholder="DATE" asp-for="date" autocomplete="" required>
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="Size" asp-for="size" autocomplete="" required>
+                            </div>
+                          
+                            <div class="form-group">
+
+                                <input type="text" class="form-control" placeholder="Color" asp-for="color" autocomplete="" required>
+                            </div>
+                            <div class="form-group">
+                                <select asp-for="sellerid" class="form-select" style="border:none;border-bottom:1px solid #ced4da;color:darkcyan" required>
+                                    <option value="">Select Seller</option>
+                                    @foreach (var seller in (List<ApplicationUser>)ViewData["sellers"])
+                                    {
+                                        <option value="@seller.Id">@seller.firstName</option>
+                                    }
+                                </select>
+                            </div>
+                            <div>
+                                @foreach (var item in Model.imagesViewModels)
+                                {
+                                    <img width="100" height="100" src="@($"data:image/png;base64,{Convert.ToBase64String(item.imgbyte)}")" style="border-radius:10px" class="mb-2" />
+                                    <input type="checkbox" value="@item.id" name="imageDeletId" />
+                                }
+
+                            </div>
+                            <div class="form-group">
+                                <input type="file" multiple class="form-control" placeholder="" asp-for="img" autocomplete="" >
+                            </div>
+                            <div class="form-group">
+
+                                <select class="form-select" asp-for="brandid" style="border:none;border-bottom:1px solid #ced4da;" required>
+                                    <option>Select Brand</option>
+                                    @{
+                                        foreach (var item in ViewData["brands"] as List<Brand>)
+                                        {
+                                            <option value="@item.id">@item.name</option>
+                                        }
+                                    }
+                                </select>
+                            </div>
+                            <div class="form-group">
+
+                                <select class="form-select" asp-for="cityid" style="border:none;border-bottom:1px solid #ced4da;" required>
+                                    <option>Select City</option>
+                                    @{
+                                        foreach (var item in ViewData["cities"] as List<City>)
+                                        {
+                                            <option value="@item.id">@item.name</option>
+                                        }
+                                    }
+                                </select>
+                            </div>
+
+
+                            <div class="form-group">
+                                <lable class="form-label text-black p-1">Select Category :</lable><br />
+                                @{
+                                    foreach (var item in ViewData["category"] as List<ProductCategory>)
+                                    {
+                                        <lable class="form-label p-1">@item.name</lable>
+                                        <input type="radio" class="form-check-inline" asp-for="catrgoryid" value="@item.id" required />
+                                    }
+                                }
+                            </div>
+                            <div>
+                                <label class="form-label p-1 text-black">Is Avalaible</label>
+                                <input type="checkbox" class="form-check-input" asp-for="IsAvalaible" />
+                            </div>
+                            <div class="form-group">
+                                <textarea class="form-control" rows="3" placeholder="DISCRIPTION" asp-for="description" required></textarea>
+                            </div>
+
+                            <div>
+                                <button id="btnAdd" class="btn btn-outline-dark  shadow btn-lg" style="border-radius:5px;font-size:12px;letter-spacing:2px;width:170px">Update</button>
+
+                                <a class="btn btn-outline-dark  shadow btn-lg float-end" style="border-radius:5px;font-size:12px;letter-spacing:2px;" asp-action="ListOfProduct" asp-controller="Admin">
+                                    LIST OF PRODUCT
+                                </a>
+
+                                <span id="spancityinsert" hidden="hidden" style="margin:100px;color:teal">Insert Successful  <img src="~/picture/done_all_fill1_wght400_grad0_opsz24.svg" /></span>
+                                <span id="spancityupdate" hidden="hidden" style="margin:100px;color:teal">Update Successful  <img src="~/picture/done_all_fill1_wght400_grad0_opsz24.svg" /></span>
+                                <span id="spancitydellet" hidden="hidden" style="margin:100px;color:teal">Delete Successful  <img src="~/picture/done_all_fill1_wght400_grad0_opsz24.svg" /></span>
+
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </form>
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,457 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+
+    <meta name="viewport" content="width=device-width" lang="en-US" />
+    <title>BlakSwan</title>
+    <link href="~/css/home.css" rel="stylesheet" />
+  
+    <link href="~/css/admin.css" rel="stylesheet" />
+   
+    <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css2?family=PT+Sans&family=Philosopher:wght@700&family=Poppins:wght@400;500&family=Work+Sans&display=swap" rel="stylesheet">
+
+    <style>
+
+        body {
+            scroll-behavior: smooth;
+        }
+
+        .containerSearch {
+            position: relative;
+            width: 300px;
+        }
+
+        #inputSearch {
+            width: 100%;
+            height: 40px;
+            padding: 10px;
+            font-size: 16px;
+            border-radius: 7px
+        }
+
+        .suggestSearch {
+            position: absolute;
+            top: 42px;
+            width: 100%;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            max-height: 170px;
+            overflow-y: auto;
+            display: none;
+            background-color: #fff;
+            z-index: 1;
+            padding: 7px;
+        }
+
+        .suggestionitem {
+            padding: 10px;
+            cursor: pointer;
+            border-radius: 7px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 14px;
+        }
+
+            .suggestionitem:hover {
+                background-color: #ccc24a;
+            }
+
+        #btnSearch {
+            background-color: #ccc24a;
+            color: #fff;
+            padding: 7px;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            border-radius: 50%;
+            height: 40px;
+            margin-left: 5px;
+            text-align: center;
+            align-content: start
+        }
+
+            #btnSearch:hover {
+                background-color: #2196F3;
+                transform: scale(1.06);
+            }
+
+
+
+
+
+
+
+
+
+
+        .insert-menu {
+            margin: 50px auto;
+            max-width: 500px;
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px #9ec5fe;
+        }
+
+            .insert-menu h2 {
+                text-align: center;
+                font-size: 24px;
+                margin-bottom: 20px;
+            }
+
+            .insert-menu form {
+                margin-top: 20px;
+            }
+
+            .insert-menu .form-group {
+                margin-bottom: 20px;
+            }
+
+            .insert-menu .form-control {
+                border: none;
+                border-bottom: 1px solid #ddd;
+                padding: 8px;
+                font-size: 16px;
+                border-radius: 0;
+                transition: border-color 0.3s;
+            }
+
+                .insert-menu .form-control:focus {
+                    border-color: #0069d9;
+                    outline: none;
+                    box-shadow: none;
+                }
+
+            .insert-menu input[type="submit"] {
+                background-color: #1b4f9d;
+                border-color: #1b4f9d;
+                border-radius: 5px;
+                color: #e2e3e5;
+                padding: 10px 20px;
+                font-size: 16px;
+                transition: background-color 0.3s;
+            }
+
+                .insert-menu input[type="submit"]:hover {
+                    background-color: #0069d9;
+                    border-color: #0062cc;
+                }
+
+            .insert-menu .form-control::placeholder {
+                color: #aaa;
+            }
+    </style>
+</head>
+<body style="color:#0098ab;background-color:azure">
+    <header id="hnav">
+        <nav class="navbar navbar-expand-lg navbar-light  text-black">
+            <div class="container">
+                <a class="navbar-brand text-light" asp-action="Index" asp-controller="Home" style="color:black;background-color:darkkhaki;width:150px;text-align:center">
+
+                    <span id="spanbrand" style="font-weight:700;color:black;font-family:'Philosopher',sans-serif;">BlackSwan</span>
+                </a>
+                <button class="navbar-toggler shadow border-0 bg-light" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse " id="navbarSupportedContent">
+                    <ul class="navbar-nav mx-auto mb-2 mb-lg-0 justify-content-center">
+                        <li class="nav-item">
+                            <a class="nav-link active text-light" aria-current="page" asp-action="Index" asp-controller="Admin">Home</a>
+                        </li>
+                      
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-light" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                           Actions
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" asp-controller="Admin" asp-action="CityInsert" >City Actions</a></li>
+                                <li><a class="dropdown-item" asp-controller="Admin" asp-action="BrandActiont">Brand Actions</a></li>
+                                <li><a class="dropdown-item" asp-controller="Admin" asp-action="ProductCategoryActiont" >Category Actions</a></li> 
+                                <li><a class="dropdown-item" asp-controller="Admin" asp-action="Users">User Actions </a></li>
+                                <li><a class="dropdown-item" asp-controller="Admin" asp-action="InsertProduct" >Product Actions</a></li>
+                                <li><a class="dropdown-item" asp-controller="Admin" asp-action="OrderList">Order Actions</a></li>
+                                <li><a class="dropdown-item" asp-controller="Admin" asp-action="DiscountCode">Discount Actions</a></li>
+                                
+                         
+                               
+                            </ul>
+                        </li> 
+                      @*   <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-light"  id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Brand Action
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" asp-action="BrandActiont" asp-controller="Admin" id="acityinsert">Insert Brand</a></li>
+                                <li><a class="dropdown-item" href="#">List Of Product</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="#">BEING SELLER</a></li>
+                            </ul>
+                        </li> *@
+                        <li class="nav-item dropdown">
+
+                            <a class="nav-link dropdown-toggle text-light" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                @inject UserManager<ApplicationUser> usermansger
+                                @if (User.Identity.IsAuthenticated)
+                                {
+                                    ApplicationUser user = await usermansger.FindByEmailAsync(User.Identity.Name);
+                                    @($"{user.firstName}  {user.lastName}")
+                                    ;
+                                }
+                                else
+                                {
+                                    @("Geust")
+                                }
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                @if (User.Identity.IsAuthenticated == false)
+                                {
+                                    <li><a class="dropdown-item" asp-action="RegisterLogin" asp-controller="Account">Register</a></li>
+                                    <li><a class="dropdown-item" asp-action="RegisterLogin" asp-controller="Account">Login</a></li>
+                                }
+
+                                else
+                                {
+                                    <li><a class="dropdown-item" asp-action="LogOut" asp-controller="Account">SignOut</a></li>
+                                }
+                                @*<li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="#">BEING SELLER</a></li>*@
+                            </ul>
+                        </li>
+
+                    </ul>
+                    <div class="containerSearch ">
+                        <div class="d-flex float-end" style="margin-left:30px">
+                            <input type="text" id="inputSearch" placeholder="Search...">
+                            <button id="btnSearch"><img src="~/picture/search_fill0_wght400_grad0_opsz24.svg" style="padding:2px" /></button>
+                        </div>
+                        <div class="suggestSearch" id="containerSuggest"></div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+   
+
+
+      <div class="d-flex" id="wrapper">
+      
+        <div class="bg-white" id="sidebar-wrapper">
+            <div class="sidebar-heading text-center py-4 primary-text fs-4 fw-bold text-uppercase " style="color:black;">
+              BlackSwan
+            </div>
+            <div class="list-group list-group-flush my-3">
+                <a href="#" class="list-group-item list-group-item-action bg-transparent second-text active">
+                    <i  class="fas fa-tachometer-alt me-2"></i>Dashboard
+                </a>
+                <a href="#" class="list-group-item list-group-item-action bg-transparent second-text fw-bold">
+                    <i class="fas fa-project-diagram me-2"></i>Projects
+                </a>
+                <a href="#" class="list-group-item list-group-item-action bg-transparent second-text fw-bold">
+                    <i class="fas fa-chart-line me-2"></i>Analytics
+                </a>
+                <a href="#" class="list-group-item list-group-item-action bg-transparent second-text fw-bold">
+                    <i class="fas fa-paperclip me-2"></i>Reports
+                </a>
+                <a href="#" class="list-group-item list-group-item-action bg-transparent second-text fw-bold">
+                    <i class="fas fa-shopping-cart me-2"></i>Store Mng
+                </a>
+                <a href="#" class="list-group-item list-group-item-action bg-transparent second-text fw-bold">
+                    <i class="fas fa-gift me-2"></i>Products
+                </a>
+                <a href="#" class="list-group-item list-group-item-action bg-transparent second-text fw-bold">
+                    <i class="fas fa-comment-dots me-2"></i>Chat
+                </a>
+                <a href="#" class="list-group-item list-group-item-action bg-transparent second-text fw-bold">
+                    <i class="fas fa-map-marker-alt me-2"></i>Outlet
+                </a>
+                <a href="#" class="list-group-item list-group-item-action bg-transparent text-danger fw-bold">
+                    <i class="fas fa-power-off me-2"></i>Logout
+                </a>
+            </div>
+        </div> 
+     
+        <div id="page-content-wrapper">
+            <nav class="navbar navbar-expand-lg navbar-light bg-transparent py-4 px-6">
+                <div class="d-flex align-items-center">
+                    <i class="fas fa-align-left primary-text fs-4 me-3" id="menu-toggle"></i>
+                    <h2 class="fs-2 m-0 text" style="color:#314152">Dashboard</h2>
+                </div>
+
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle second-text fw-bold" href="#" id="navbarDropdown"
+                               role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fas fa-user me-2"></i>Admin
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" href="#">Profile</a></li>
+                                <li><a class="dropdown-item" href="#">Settings</a></li>
+                                <li><a class="dropdown-item" href="#">Logout</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+            
+
+            <div class="container-fluid px-6" style="background-color:#dee2e6">
+                <div class="row g-3 my-2">
+                   @*  <div class="col-md-3">
+                        <div class="p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded">
+                            <div>
+                                <h3 class="fs-2">720</h3>
+                                <p class="fs-5">Products</p>
+                            </div>
+                            <i class="fas fa-gift fs-1 primary-text border rounded-full secondary-bg p-3"></i>
+                        </div>
+                    </div> *@
+
+                   @*  <div class="col-md-3">
+                        <div class="p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded">
+                            <div>
+                                <h3 class="fs-2">4920</h3>
+                                <p class="fs-5">Sales</p>
+                            </div>
+                            <i class="fas fa-hand-holding-usd fs-1 primary-text border rounded-full secondary-bg p-3"></i>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded">
+                            <div>
+                                <h3 class="fs-2">3899</h3>
+                                <p class="fs-5">Delivery</p>
+                            </div>
+                            <i class="fas fa-truck fs-1 primary-text border rounded-full secondary-bg p-3"></i>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded">
+                            <div>
+                                <h3 class="fs-2">%25</h3>
+                                <p class="fs-5">Increase</p>
+                            </div>
+                            <i class="fas fa-chart-line fs-1 primary-text border rounded-full secondary-bg p-3"></i>
+                        </div>
+                    </div> *@
+                </div> 
+                @RenderBody()
+           </div>
+        </div>
+    </div>
+    <script>
+      
+
+
+                const searchInput = document.getElementById("inputSearch");
+        const suggestionsContainer = document.getElementById("containerSuggest");
+
+        searchInput.addEventListener("input", function () {
+
+
+
+            $("#btnSearch").click(function () {
+
+                const query = $("#inputSearch").val().toLowerCase().trim();
+
+                if (query === '') {
+                    suggestionsContainer.style.display = "none";
+                    return;
+                }
+                if (query === "user" || query === "users") {
+
+                    window.location.href = "/Admin/Users";
+                }
+
+                else if (query === "order" || query === "orders") {
+                    window.location.href = "/Admin/OrderList";
+                }
+
+                else if (query === "product" || query === "products") {
+                    window.location.href = "/Admin/ListOfProduct";
+                }
+
+                else if (query === "brand" || query === "brands") {
+                    window.location.href = "/Admin/BrandActiont";
+                }
+
+
+                else if (query === "city" || query === "cities") {
+                    window.location.href = "/Admin/CityInsert";
+                }
+
+                else if (query === "category" || query === "categories") {
+                    window.location.href = "/Admin/ProductCategoryActiont";
+                }
+                else if (query === "discount" || query === "discounts") {
+                    window.location.href = "/Admin/DiscountCode";
+                }
+
+                else {
+
+                    console.log("  Nothing Find!");
+
+                    $(".suggestSearch").text("Nothing Find!");
+
+                }
+
+            });
+
+            const searchSuggestions = ["User", "Order", "Product", "Brand", "Discount", "City", "Category"];
+
+
+            showSuggestions(searchSuggestions);
+        });
+
+        function showSuggestions(suggestions) {
+            if (suggestions.length === 0) {
+                suggestionsContainer.style.display = "none";
+                return;
+            }
+
+
+            suggestionsContainer.innerHTML = "";
+
+
+            suggestions.forEach(sug => {
+                const suggestionItem = document.createElement("div");
+                suggestionItem.classList.add("suggestionitem");
+                suggestionItem.textContent = sug;
+
+                suggestionItem.addEventListener("click", () => {
+                    searchInput.value = sug;
+                    suggestionsContainer.style.display = "none";
+                });
+
+                suggestionsContainer.appendChild(suggestionItem);
+            });
+
+            suggestionsContainer.style.display = "block";
+        }
+
+
+    </script>
+
+</body>
+</html>
+
+
+
+

@@ -1,0 +1,175 @@
+﻿@{
+    ViewData["Title"] = "DiscountCode";
+    Layout = "~/Views/Shared/_actionadminlayout.cshtml";
+}
+
+
+
+<link href="~/css/home.css" rel="stylesheet" />
+<link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+<link href="~/css/admin.css" rel="stylesheet" />
+<script src="~/lib/jquery/dist/jquery.js"></script>
+@model DisViewModel
+<div class="container-fluid px-4" style="color:#009688;background-color:#dee2e6">
+    <div class="row g-3 my-2">
+
+        <div class="col-md-3">
+
+            <div class="p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded">
+                <div>
+                    <div id="cityCount">
+                        <h3 id="countNumber" class="fs-2">0</h3>
+
+                    </div>
+                    <p class="fs-5">Count Of Discount Code</p>
+                </div>
+                <i class="fas fa-gift fs-1 primary-text border rounded-full secondary-bg p-3"></i>
+            </div>
+        </div>
+
+        <div class="row my-5">
+            <div id="formcityinsert">
+
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-6 offset-lg-3">
+                            <div class="insert-menu">
+
+
+                                <div class="form-group">
+                                    <h2 id="hinsert" style="font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif">INSERT Code</h2>
+                                    <h2 id="hupdate" hidden="hidden" style="font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif">Update Code</h2>
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" placeholder="Code Nmae" asp-for="code" autocomplete="off">
+                                    </div>
+                                    <div>
+                                        <div>
+                                            <label class="form-label text-black">Is Active</label>
+                                            <input type="checkbox" class="form-check-input text-black-50" id="isactiveCheckbox" asp-for="isactive" />
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <button id="btnAdd" class="btn btn-outline-dark  shadow btn-lg" style="border-radius:5px;font-size:12px;letter-spacing:2px;font-weight:700;width:100px">Plus</button>
+                                    <button id="btnUpdate" class="btn btn-dark btn-lg" style="border-radius:5px;font-size:12px;letter-spacing:2px;font-weight:700" hidden="hidden">Update</button>
+                                    <span id="spancityinsert" hidden="hidden" style="margin:80px;color:lightseagreen">Insert Successful  <img src="~/picture/done_all_fill1_wght400_grad0_opsz24.svg" /></span>
+                                    <span id="spancityupdate" hidden="hidden" style="margin:80px;color:lightseagreen">Update Successful  <img src="~/picture/done_all_fill1_wght400_grad0_opsz24.svg" /></span>
+                                    <span id="spancitydellet" hidden="hidden" style="margin:80px;color:lightseagreen">Delete Successful  <img src="~/picture/done_all_fill1_wght400_grad0_opsz24.svg" /></span>
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+            <div>
+                <h3 class="fs-4 mb-3 text-center" style="font-family:'Times New Roman', Times, serif;letter-spacing:2px">List Of Discount Code</h3>
+                <div class="container" id="divselect">
+                    <table class="table table-hover  shadow   " id="tbl">
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+
+    $(function () {
+
+        Select()
+
+        let btnAdd = $("#btnAdd");
+        btnAdd.click(function () {
+            let isactive = $("#isactiveCheckbox").prop("checked");
+            $.post('/Admin/DiscountInsert', { code: $("#code").val(), isactive: isactive }, function (value) {
+                $("#code").val(null);
+                $("#isactiveCheckbox").prop("checked", false);
+                $("#spancityupdate").attr("hidden", true);
+                $("#spancitydellet").attr("hidden", true);
+                $("#spancityinsert").attr("hidden", false);
+                $("#code").click(function () {
+                    $("#spancityinsert").attr("hidden", true);
+                });
+                Select()
+            })
+
+        })
+
+    })
+    let i = 1
+    let tbl = $("#tbl")
+    function Select() {
+        $("#tbl").html(null)
+
+        $.post("/Admin/DisSelect", function (value) {
+            let th = `<thead class=" bg-info text-light"><tr><th>#</th><th>name</th><th>Is Active</th><th>Delete</th><th>Edit</th><tr></thead>`
+            tbl.append(th)
+            let tbody = "<tbody></tbody>"
+
+            tbl.append(tbody)
+            $("#countNumber").text(value.length);
+
+            value.forEach((dis, index) => {
+                let tr = `<tr><td>${i}</td>
+                                                <td>${dis.code}</td>
+                                                    <td>${dis.isactive}</td>
+                                                          <td><button class="btn btn-outline-danger " style="width:100px;font-size:12px" onclick="F1(${dis.id})">Delete</button></td>
+                                                              <td><button class="btn btn-outline-primary" style="width:100px;font-size:12px" onclick="F2(${dis.id})">Edit</button></td>
+                                               </tr>`
+                tbl.append(tr)
+                i++
+            })
+        })
+    }
+    function F1(id) {
+        $.post("/Admin/DisDelete", { id: id }, function (value) {
+            $("#spancityinsert").attr("hidden", true)
+            $("#spancityupdate").attr("hidden", true)
+            $("#spancitydellet").attr("hidden", false)
+            $(".form-control").click(function () {
+                $("#spancitydellet").attr("hidden", true)
+
+            })
+            Select();
+        })
+    }
+    let objectid;
+
+    function F2(id) {
+        objectid = id;
+        $.post("/Admin/DisEdit", { id: id }, function (value) {
+            $("#code").val(value.code);
+            $("#isactiveCheckbox").prop("checked", false);
+            $("#spancityupdate").attr("hidden", true);
+            $("#spancitydellet").attr("hidden", true);
+            $("#spancityinsert").attr("hidden", true);
+            $("#hinsert").attr("hidden", "hidden");
+            $("#hupdate").attr("hidden", false);
+            $("#btnUpdate").attr("hidden", false);
+            $("#btnAdd").attr("hidden", "hidden");
+        })
+    }
+
+    $("#btnUpdate").click(function () {
+        isactive = $("#isactiveCheckbox").prop("checked");
+        $.post('/Admin/DisUpdate', { id: objectid, code: $("#code").val(), isactive: isactive }, function (value) {
+            $("#spancityupdate").attr("hidden", false);
+            $("#spancitydellet").attr("hidden", true);
+            $("#spancityinsert").attr("hidden", true);
+            $("#hinsert").attr("hidden", false);
+            $("#hupdate").attr("hidden", true);
+            $("#code").val(null)
+            $("#isactiveCheckbox").prop("checked", false);
+            $("#btnUpdate").attr("hidden", true);
+            $("#btnAdd").attr("hidden", false);
+            $(".form-control").click(function () {
+                $("#spancityupdate").attr("hidden", true)
+            })
+            Select();
+        })
+    })
+
+</script>

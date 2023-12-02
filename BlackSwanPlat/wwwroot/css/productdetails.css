@@ -1,0 +1,79 @@
+﻿@import url('https://fonts.googleapis.com/css2?family=PT+Sans&family=Poppins:wght@400;500&family=Work+Sans&display=swap');
+
+
+
+body {
+    font-family: 'Poppins', sans-serif;
+}
+
+.custom-footer {
+    background-color: transparent;
+    border: none;
+}
+
+.custum-bg {
+    height: 350px;
+    background: #f1f1f1;
+    border-radius: 12px;
+}
+
+h2 {
+    margin-left: 10px;
+    color: darkcyan;
+}
+
+.cardproduct {
+    transition: transform 0.3s ease-in-out;
+}
+
+    .cardproduct:hover {
+        transform: scale(1.03);
+    }
+
+.titleproduct {
+    color: #3f51b5;
+    font-family: 'Philosopher', sans-serif;
+    font-size: 26px;
+    border-bottom: 0px solid;
+    padding-bottom: 2px;
+    font-size: 26px;
+    transition: color 0.3s ease-in-out;
+}
+
+.brandproduct {
+    color: #fd7e14;
+    font-family: 'Philosopher', sans-serif;
+    font-size: 18px;
+    transition: color 0.3s ease-in-out;
+}
+
+.desproduct {
+    transition: max-height 0.3s ease-in-out;
+    max-height: 0;
+    overflow: hidden;
+    color: darkcyan;
+}
+
+.cardproduct:hover .desproduct {
+    max-height: 100px;
+}
+
+.priceproduct h2 {
+    color: darkcyan;
+    font-family: 'Philosopher', sans-serif;
+    font-size: 28px;
+    transition: color 0.3s ease-in-out;
+}
+
+.btnwatch {
+    background-color: #3f51b5;
+    color: aliceblue;
+    font-family: 'Philosopher', sans-serif;
+    font-size: 14px;
+    letter-spacing: 1px;
+    transition: background-color 0.3s ease-in-out;
+}
+
+    .btnwatch:hover {
+        background-color: #fd7e14;
+    }
