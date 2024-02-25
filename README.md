@@ -1,5 +1,5 @@
 Introduction
-This project is an online store implemented using the C# programming language and the ASP.NET MVC framework. The store adheres to all security and authentication measures required for an online store.
+This project is an online store implemented using the C# programming language and the ASP.NET core MVC. The store adheres to all security and authentication measures required for an online store.
 Features
 User Management: The identity and user management system is implemented using ASP.NET Identity.
 Security Pages: Secure pages for changing passwords, password recovery, and other security-related matters are provided.
